@@ -1,0 +1,44 @@
+name: Deploy - Sistema de Gestão de Ferramentais
+
+on:
+  push:
+    branches:
+      - painel-principal
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📦 Checkout do código-fonte
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Configuração do GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: 🔧 Preparar arquivos para publicação
+        run: |
+          mkdir -p docs
+          rsync -av --exclude='.github' --exclude='.git' --exclude='node_modules' ./ docs/
+          echo "" > docs/.nojekyll
+          echo "📂 Arquivos copiados para o diretório docs/"
+
+      - name: 🚀 Publicar no GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: 🌐 Deploy para o GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
