@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SGF 2.0 — Grupo Sovel</title>
+<style>
+  body {
+    background-color: #0a0f1a;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 40px;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: auto;
+    background-color: #101826;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 40px #00eaff33;
+  }
+
+  h1 {
+    color: #00eaff;
+    text-align: center;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px #00eaff, 0 0 20px #00eaff88;
+  }
+
+  h3 {
+    color: #b0b0b0;
+    text-align: center;
+    margin-top: 0;
+  }
+
+  pre {
+    background: #0e1623;
+    color: #00eaff;
+    padding: 20px;
+    border-radius: 10px;
+    overflow-x: auto;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid #00eaff33;
+    margin: 30px 0;
+  }
+
+  a {
+    color: #00eaff;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 40px;
+    color: #888;
+  }
+
+  /* === Neon animado === */
+  .logo-container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .logo-container img {
+    width: 160px;
+    filter: drop-shadow(0 0 20px #00eaffaa);
+    animation: pulsar 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulsar {
+    0%, 100% {
+      filter: drop-shadow(0 0 10px #00eaff55);
+      transform: scale(1);
+    }
+    50% {
+      filter: drop-shadow(0 0 25px #00eaff);
+      transform: scale(1.05);
+    }
+  }
+
+  code {
+    background: #0d1420;
+    padding: 2px 6px;
+    border-radius: 6px;
+    color: #00eaff;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo-container">
+      <img src="docs/assets/img/logosovel133.png" alt="Logo Grupo Sovel">
+    </div>
+
+    <h1>SGF 2.0 — Sistema de Gestão de Ferramentais</h1>
+    <h3>Grupo Sovel • Departamento de Amostras e Clicheria</h3>
+
+    <hr>
+
+    <h2>📌 Sobre o Projeto</h2>
+    <p>O <strong>SGF 2.0</strong> é um sistema interno de controle e registro de ferramentais, desenvolvido para o <strong>Departamento de Amostras e Clicheria</strong> do <strong>Grupo Sovel</strong>. Seu objetivo é otimizar o gerenciamento de informações, garantindo rastreabilidade e agilidade nas operações.</p>
+
+    <hr>
+
+    <h2>⚙️ Estrutura do Projeto</h2>
+    <pre>
+SGF/
+├── .github/
+│   └── workflows/
+│       └── static.yml
+│
+├── docs/
+│   ├── index.html
+│   ├── menu.html
+│   ├── registrar.html
+│   ├── consultar.html
+│   ├── detalhes.html
+│   ├── editar.html
+│   ├── dashboard.html
+│   ├── .nojekyll
+│   │
+│   ├── assets/
+│   │   ├── css/style.css
+│   │   ├── img/
+│   │
+│   └── js/
+│       ├── firebase-config.js
+│       ├── exporter.js
+│       └── script.js
+    </pre>
+
+    <hr>
+
+    <h2>🚀 Deploy Automático (GitHub Pages)</h2>
+    <p>O site é hospedado automaticamente via <strong>GitHub Pages</strong>, usando o fluxo de deploy em <code>/.github/workflows/static.yml</code>.</p>
+
+    <hr>
+
+    <h2>🌐 Acesso</h2>
+    <p>📎 <a href="https://SEU_USUARIO.github.io/SGF/docs/">Acesse o SGF 2.0</a><br>(substitua <code>SEU_USUARIO</code> pelo seu usuário do GitHub)</p>
+
+    <footer>
+      <p>© 2025 Grupo Sovel — Departamento de Amostras e Clicheria<br>Desenvolvido por <strong>Samuel Lima</strong></p>
+    </footer>
+  </div>
+</body>
+</html>
