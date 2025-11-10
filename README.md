@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="docs/assets/img/logosovel133.png" alt="Logo Grupo Sovel" width="180">
+  <img src="SGF/docs/assets/img/logosovel133.png" alt="Logo Grupo Sovel" width="180">
 </p>
 
-<h1 align="center">SGF 2.0 — Sistema de Gestão de Ferramentais</h1>
+<h1 align="center">SGF — Sistema de Gestão de Ferramentais</h1>
 
 <p align="center">
   <strong>Grupo Sovel · Departamento de Amostras e Clicheria</strong>
@@ -12,7 +12,7 @@
 
 ## 🧩 Sobre o Projeto
 
-O **SGF 2.0** é um sistema interno de controle e registro de ferramentais, desenvolvido para o **Departamento de Amostras e Clicheria** da **Grupo Sovel**. Seu objetivo é otimizar o gerenciamento de informações, garantindo **rastreabilidade**, **segurança** e **agilidade** nas operações internas.
+O **SGF** é um sistema interno de controle e registro de ferramentais, desenvolvido para o **Departamento de Amostras e Clicheria** da **Grupo Sovel**. Seu objetivo é otimizar o gerenciamento de informações, garantindo **rastreabilidade**, **segurança** e **agilidade** nas operações internas.
 
 ---
 
@@ -96,8 +96,8 @@ Sempre que há um novo commit na branch principal, o GitHub executa automaticame
 **Desenvolvido por:**  
 🧰 *Departamento de Amostras e Clicheria — Grupo Sovel da Amazônia*
 
-📅 **Versão atual:** SGF 2.0  
-📧 **Contato interno:** amostras@gruposovel.com.br  
+📅 **Versão atual:** SGF 1.0
+📧 **Contato interno:** dac@sovel.com.br  
 
 ---
 
