@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="SGF/docs/assets/img/logosovel133.png" alt="Logo Grupo Sovel" width="180">
-</p>
+<h1 align="center">Grupo Sovel da Amazônia</h1>h1>
 
 <h1 align="center">SGF — Sistema de Gestão de Ferramentais</h1>
 
