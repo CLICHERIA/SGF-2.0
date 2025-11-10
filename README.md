@@ -1,4 +1,4 @@
-<h1 align="center">Grupo Sovel da Amazônia</h1>h1>
+<h1 align="center">Grupo Sovel da Amazônia</h1>
 
 <h1 align="center">SGF — Sistema de Gestão de Ferramentais</h1>
 
