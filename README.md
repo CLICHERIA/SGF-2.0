@@ -76,7 +76,7 @@ O **SGF** é um sistema interno de controle e registro de ferramentais, desenvol
 ## 🚀 Deploy Automático (GitHub Pages)
 
 O site é hospedado automaticamente via **GitHub Pages**, utilizando o fluxo de deploy configurado em: `.github/workflows/static.yml`  
-Sempre que há um novo commit na branch principal, o GitHub executa automaticamente o processo de build e publica o site atualizado. 🔗 **Acesse o SGF 2.0:** https://SEU_USUARIO.github.io/SGF/docs/ *(Substitua `SEU_USUARIO` pelo seu usuário do GitHub.)*
+Sempre que há um novo commit na branch principal, o GitHub executa automaticamente o processo de build e publica o site atualizado. 🔗 **Acesse o SGF:** https://clicheria.github.io/SGF/docs/ 
 
 ---
 
