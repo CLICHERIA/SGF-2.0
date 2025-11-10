@@ -2,70 +2,110 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Menu — SGF</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Menu SGF — Grupo Sovel</title>
+  <meta name="description" content="Menu interativo do Sistema de Gestão de Ferramentais — Grupo Sovel (D.A.C)" />
+  <link rel="icon" href="assets/img/logosovel1337.png" />
   <link rel="stylesheet" href="assets/css/style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    /* CSS inline para animações básicas */
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+  </style>
 </head>
 <body>
   <div class="container">
-    <header class="header">
-      <img src="assets/img/logosovel1337.png" class="logo" alt="logo" />
-      <div>
-        <div class="title">Painel | SGF</div>
-        <div class="subtitle">Menu Interativo — Grupo Sovel • D.A.C</div>
+    <header class="header fade-in">
+      <img src="assets/img/logosovel1337.png" alt="Logo Grupo Sovel" class="logo" />
+      <div class="header-text">
+        <div class="title">Sistema de Gestão de Ferramentais — SGF</div>
+        <div class="subtitle">Departamento de Amostras e Clicheria • Grupo Sovel da Amazônia</div>
       </div>
     </header>
 
-    <div class="card fade-in">
+    <main class="card fade-in">
+      <h3 class="welcome-title">Menu Interativo SGF</h3>
+      <p class="welcome-desc">
+        Selecione uma opção abaixo para acessar as funcionalidades do sistema.
+      </p>
+
       <div class="menu-grid">
         <div class="menu-btn" onclick="location.href='registrar.html'">
           <div class="icon">➕</div>
-          <div>
+          <div class="btn-content">
             <div class="label">Registrar Ferramental</div>
-            <div class="desc">Novo cadastro rápido</div>
+            <div class="desc">Adicionar novo item ao sistema</div>
           </div>
         </div>
 
         <div class="menu-btn" onclick="location.href='consultar.html'">
-          <div class="icon">🔎</div>
-          <div>
-            <div class="label">Consultar / Editar</div>
-            <div class="desc">Pesquisar por SV, Nome, NF-e</div>
+          <div class="icon">🔍</div>
+          <div class="btn-content">
+            <div class="label">Consultar Ferramentais</div>
+            <div class="desc">Buscar, editar e gerar QR</div>
           </div>
         </div>
 
         <div class="menu-btn" onclick="location.href='dashboard.html'">
-          <div class="icon">📊</div>
-          <div>
+          <div class="icon">📈</div>
+          <div class="btn-content">
             <div class="label">Dashboard</div>
-            <div class="desc">Relatórios e tendências</div>
+            <div class="desc">Visão geral e gráficos</div>
           </div>
         </div>
 
-        <div class="menu-btn" onclick="logout()">
-          <div class="icon">🔒</div>
-          <div>
-            <div class="label">Sair</div>
-            <div class="desc">Encerrar sessão</div>
+        <div class="menu-btn" onclick="location.href='relatorios.html'">
+          <div class="icon">📊</div>
+          <div class="btn-content">
+            <div class="label">Relatórios</div>
+            <div class="desc">Gerar relatórios e estatísticas</div>
+          </div>
+        </div>
+
+        <div class="menu-btn" onclick="location.href='configuracoes.html'">
+          <div class="icon">⚙️</div>
+          <div class="btn-content">
+            <div class="label">Configurações</div>
+            <div class="desc">Ajustes do sistema e usuário</div>
+          </div>
+        </div>
+
+        <div class="menu-btn" onclick="location.href='index.html'">
+          <div class="icon">🏠</div>
+          <div class="btn-content">
+            <div class="label">Voltar ao Início</div>
+            <div class="desc">Retornar à página principal</div>
           </div>
         </div>
       </div>
-    </div>
+
+      <div class="footer-actions">
+        <div class="copyright">© 2025 Grupo Sovel da Amazônia — D.A.C</div>
+        <div class="actions">
+          <a class="btn ghost" href="README.html" target="_blank">Documentação</a>
+          <a class="btn primary" href="index.html">Sair</a>
+        </div>
+      </div>
+    </main>
+
+    <div class="footer">Versão 1.0 • Atualizado Outubro/2025</div>
   </div>
 
-  <script type="module">
-    import { auth } from './assets/js/firebase-config.js';
-    import { logout } from './assets/js/script.js';
-
-    // Protege a página: redireciona para index.html se não estiver autenticado
-    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js";
-    onAuthStateChanged(auth, user => {
-      if (!user) window.location.href = "index.html";
+  <script>
+    // JavaScript para smooth scrolling (se necessário para links internos futuros)
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
     });
-
-    // Disponibiliza logout globalmente
-    window.logout = logout;
   </script>
 </body>
 </html>
