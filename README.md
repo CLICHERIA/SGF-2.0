@@ -94,7 +94,7 @@ Sempre que há um novo commit na branch principal, o GitHub executa automaticame
 
 ## 💡 Autor e Manutenção
 
-**Desenvolvido por:*Samueldson Ferreira*  
+**Desenvolvido por: *Samueldson Ferreira*  
 🧰 *Departamento de Amostras e Clicheria — Grupo Sovel da Amazônia*
 
 📅 **Versão atual:** SGF 1.0
