@@ -1,77 +1,120 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gestão de Ferramentais — Grupo Sovel</title>
 
   <style>
-    html, body {
+    /* RESET */
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      width: 100%;
       height: 100%;
-      background: radial-gradient(circle at top, #111827, #0a0f1a);
       font-family: "Segoe UI", Roboto, Arial, sans-serif;
-      color: #e3e9f3;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      color: #e9edf5;
+      overflow: hidden;
     }
 
+    /* ✅ Background inspirado no site Sovel */
+    body {
+      background: radial-gradient(circle at top, #0c1a2a 0%, #05080d 60%, #000000 100%);
+      background-attachment: fixed;
+    }
+
+    /* ✅ “Glow texture” discreto como no site */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(
+        circle at 70% 20%,
+        rgba(0, 122, 255, 0.25) 0%,
+        rgba(0, 122, 255, 0) 60%
+      );
+      pointer-events: none;
+    }
+
+    /* ✅ Container estilo “Glass Card” corporativo */
     .container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 600px;
+      padding: 40px;
       text-align: center;
-      padding: 55px 55px;
-      background: rgba(255, 255, 255, 0.035);
-      border: 1px solid rgba(255,255,255,0.09);
-      border-radius: 16px;
+
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(8px);
-      box-shadow: 0 0 35px rgba(0, 195, 255, 0.18);
+
+      box-shadow: 
+        0 0 25px rgba(0, 122, 255, 0.12),
+        0 5px 22px rgba(0, 0, 0, 0.5);
     }
 
+    /* Títulos */
     h1 {
-      margin: 0;
-      font-size: 2.4rem;
+      font-size: 2rem;
       font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 10px;
     }
 
     h2 {
-      margin: 10px 0 45px 0;
+      font-size: 1.15rem;
+      color: #ced6e3;
       font-weight: 300;
-      color: #bcd4ff;
+      margin-bottom: 40px;
     }
 
+    /* ✅ Botão estilo Sovel (minimalista + glow azul sutil) */
     .btn {
-      padding: 15px 50px;
-      background: linear-gradient(135deg, #005b94, #008bcd);
-      color: white;
+      display: inline-block;
+      padding: 15px 45px;
+      border-radius: 10px;
       text-decoration: none;
-      border-radius: 12px;
-      font-size: 1.2rem;
       font-weight: 500;
-      letter-spacing: 0.5px;
-      border: 1px solid #27a8ff;
-      box-shadow: 0 0 15px rgba(0, 170, 255, 0.35);
-      transition: 0.25s;
+      font-size: 1.1rem;
+
+      background: linear-gradient(135deg, #0f2d47, #134d7a);
+      border: 1px solid rgba(79, 163, 255, 0.5);
+      color: #e5f3ff;
+
+      box-shadow: 0 0 14px rgba(79, 163, 255, 0.35);
+      transition: 0.25s ease;
     }
 
     .btn:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 0 28px rgba(0, 170, 255, 0.55);
+      background: linear-gradient(135deg, #134d7a, #0f2d47);
+      transform: translateY(-3px);
+      box-shadow: 0 0 25px rgba(79, 163, 255, 0.6);
     }
 
+    /* Rodapé */
     footer {
       position: absolute;
       bottom: 14px;
       width: 100%;
       text-align: center;
-      color: #7c8799;
+      color: #7d8ea7;
       font-size: 0.85rem;
+      letter-spacing: 0.4px;
     }
-  </style>
 
+  </style>
 </head>
 
 <body>
+
   <div class="container">
     <h1>Gestão de Ferramentais</h1>
     <h2>Grupo Sovel — Departamento de Amostras e Clicheria</h2>
@@ -82,5 +125,6 @@
   <footer>
     © 2025 Grupo Sovel — Sistema Interno
   </footer>
+
 </body>
 </html>
