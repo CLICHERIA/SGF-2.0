@@ -10,7 +10,7 @@
 
 ## 🧩 Sobre o Projeto
 
-O SGF é um sistema interno de controle e registro de ferramentais, desenvolvido para o Departamento de Amostras e Clicheria** do Grupo Sovel da Amazônia.
+O SGF é um sistema interno de controle e registro de ferramentais, desenvolvido para o Departamento de Amostras e Clicheria do Grupo Sovel da Amazônia.
 Seu objetivo é otimizar o gerenciamento de informações referentes aos ferramentais, garantindo rastreabilidade, segurança e agilidade nas operações internas.
 
 ---
@@ -79,7 +79,7 @@ Seu objetivo é otimizar o gerenciamento de informações referentes aos ferrame
 O site é hospedado automaticamente via GitHub Pages, utilizando o fluxo de deploy configurado em: `.github/workflows/static.yml`  
 Sempre que há um novo commit na branch principal, o GitHub executa automaticamente o processo de build e publica o site atualizado. 
 
-🔗 **Acesse o SGF:** https://clicheria.github.io/SGF/docs/ 
+🔗 **Acesse o SGF:** https://github.com/CLICHERIA/SGF 
 
 ---
 
