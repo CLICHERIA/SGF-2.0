@@ -1,182 +1,125 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gestão de Ferramentais — Grupo Sovel</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gestão de Ferramentais — Grupo Sovel</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<style>
+  /* ================================
+     ESTILO GLOBAL — TEMA CORPORATIVO SOVEL
+  =================================== */
 
-    body, html {
-      width: 100%;
-      height: 100%;
-      font-family: "Segoe UI", Roboto, Arial, sans-serif;
-      overflow: hidden;
-    }
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    font-family: "Segoe UI", Roboto, sans-serif;
+    color: #e5eaf0;
 
-    /* ✅ HERO BACKGROUND — estilo Sovel */
-    .hero {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
+    /* Fundo inspirado no estilo do site Sovel
+       — Azul petróleo + preto industrial com gradientes */
+    background: radial-gradient(circle at top center,
+        rgba(0, 80, 120, 0.55),
+        rgba(0, 30, 50, 0.85) 60%,
+        rgba(0, 10, 20, 1) 100%),
+      linear-gradient(90deg,
+        rgba(0, 50, 80, 0.3),
+        rgba(0, 20, 40, 0.6));
+    background-blend-mode: overlay;
+    background-size: cover;
+    background-position: center;
+  }
 
-      /* ✅ Coloque sua imagem aqui */
-      background-image: url("floresta.jpg");
-    }
+  /* Container central */
+  .container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+  }
 
-    /* ✅ Overlay escuro + neblina como no site */
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.55) 0%,
-        rgba(0, 0, 0, 0.65) 40%,
-        rgba(0, 0, 0, 0.75) 100%
-      );
-      backdrop-filter: blur(2px);
-    }
+  /* LOGO */
+  .logo {
+    width: 190px;
+    margin-bottom: 25px;
+    filter: drop-shadow(0 0 12px rgba(0, 255, 255, 0.2));
+  }
 
-    /* ✅ Conteúdo central estilo Sovel */
-    .content {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      color: white;
-      z-index: 10;
-    }
+  /* TÍTULOS */
+  h1 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin: 0;
+    text-shadow: 0 0 10px rgba(0, 150, 255, 0.35);
+  }
 
-    h1 {
-      font-size: 3.2rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
+  h2 {
+    margin-top: 10px;
+    font-size: 1.1rem;
+    font-weight: 300;
+    opacity: 0.85;
+  }
 
-    h2 {
-      font-size: 1.2rem;
-      font-weight: 300;
-      opacity: 0.85;
-      margin-bottom: 40px;
-    }
+  /* BOTÃO CORPORATIVO */
+  .btn {
+    margin-top: 40px;
+    padding: 16px 42px;
+    font-size: 1.2rem;
+    background: linear-gradient(90deg,
+      #0b5c7a,
+      #0a789c);
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    letter-spacing: 0.5px;
 
-    /* ✅ Botão moderno */
-    .btn {
-      display: inline-block;
-      padding: 16px 48px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-size: 1.1rem;
+    transition: 0.25s ease-in-out;
+    box-shadow: 0 0 12px rgba(0, 180, 255, 0.2);
+  }
 
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.25);
-      color: white;
+  .btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 20px rgba(0, 220, 255, 0.4);
+    background: linear-gradient(90deg,
+      #0d6b8c,
+      #0b87b3);
+  }
 
-      backdrop-filter: blur(4px);
-      transition: 0.25s ease;
-    }
-
-    .btn:hover {
-      background: rgba(255,255,255,0.15);
-      transform: translateY(-3px);
-      box-shadow: 0 0 20px rgba(255,255,255,0.25);
-    }
-
-    footer {
-      position: fixed;
-      bottom: 12px;
-      width: 100%;
-      text-align: center;
-      color: #cccccc;
-      font-size: 0.85rem;
-      z-index: 10;
-    }
-  </style>
-
+  /* Rodapé */
+  footer {
+    position: absolute;
+    bottom: 18px;
+    width: 100%;
+    text-align: center;
+    font-size: 0.85rem;
+    opacity: 0.6;
+  }
+</style>
 </head>
 
 <body>
 
-  <div class="hero"></div>
+<div class="container">
 
-  <div class="content">
-    <h1>Gestão de Ferramentais</h1>
-    <h2>Grupo Sovel — Departamento de Amostras e Clicheria</h2>
+  <img src="logo.png" class="logo" alt="Logo Sovel">
 
-    <a href="menu.html" class="btn">Acessar Painel Interativo</a>
-  </div>
+  <h1>Gestão de Ferramentais</h1>
+  <h2>Grupo Sovel — Departamento de Amostras e Clicheria</h2>
 
-  <footer>
-    © 2025 Grupo Sovel — Sistema Interno
-  </footer>
-  <footer class="footer">
-  <div class="footer-content">
+  <button class="btn" onclick="window.location.href='menu.html'">
+    Acessar Menu Interativo
+  </button>
 
-    <!-- COLUNA ESQUERDA -->
-    <div class="footer-left">
-      <img src="logo.png" alt="Sovel" class="footer-logo">
+</div>
 
-      <p class="footer-about">
-        Grupo Sovel, uma empresa genuinamente amazônense
-      </p>
-
-      <div class="social-links">
-        <a href="#"><img src="instagram.svg" class="icon"></a>
-        <a href="#"><img src="linkedin.svg" class="icon"></a>
-      </div>
-    </div>
-
-    <!-- COLUNA CENTRAL -->
-    <div class="footer-center">
-      <div class="footer-item">
-        <span class="footer-ico">📍</span>
-        <p>
-          <strong>Rua Dr. João de Paulo, 600</strong><br>
-          Colônia Antônio Aleixo<br>
-          Manaus - AM
-        </p>
-      </div>
-
-      <div class="footer-item">
-        <span class="footer-ico">📞</span>
-        <p><strong>(92) 9 8202-0067</strong></p>
-      </div>
-
-      <div class="footer-item">
-        <span class="footer-ico">ℹ️</span>
-        <p>
-          Seg - Qui: 7h às 17h<br>
-          Sex: 7h às 16h
-        </p>
-      </div>
-    </div>
-
-    <!-- COLUNA DIREITA (MAPA) -->
-    <div class="footer-map">
-      <iframe 
-        src="https://www.openstreetmap.org/export/embed.html?bbox=-60.067%2C-3.12%2C-59.99%2C-3.05&layer=mapnik&marker=-3.10%2C-60.02"
-        style="border: 1px solid #ccc; width:100%; height:180px; border-radius:8px;">
-      </iframe>
-    </div>
-
-  </div>
-
-  <hr class="footer-line">
-
-  <p class="footer-copy">Copyright © 2025 Sovel da Amazônia</p>
-</footer>
-
+<footer>© 2025 Grupo Sovel — Todos os direitos reservados</footer>
 
 </body>
 </html>
-
