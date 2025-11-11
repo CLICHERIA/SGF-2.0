@@ -1,60 +1,53 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Consultar Ferramentais</title>
-  <style>
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-    }
-    th {
-      background-color: #007bff;
-      color: white;
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <h1>Consulta de Ferramentais</h1>
-  <button id="logoutBtn">Logout</button>
-  <br /><br />
+  <header class="header">
+    <h1 class="title">Consultar Ferramentais</h1>
+    <nav>
+      <button class="btn btn-primary" id="logoutBtn">Logout</button>
+    </nav>
+  </header>
 
-  <input type="text" id="searchInput" placeholder="Buscar por SV, Nome ou NF-e" />
-  <button id="searchBtn">Buscar</button>
-  <br /><br />
+  <main class="container">
+    <section class="search-section">
+      <input type="text" class="input-search" id="searchInput" placeholder="Buscar por SV, Nome ou NF-e">
+      <button class="btn btn-primary" id="searchBtn">Buscar</button>
+    </section>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Tipo</th>
-        <th>NFE</th>
-        <th>SV</th>
-        <th>Nome</th>
-        <th>Data Registro</th>
-        <th>Estado</th>
-        <th>Localização</th>
-        <th>Responsável</th>
-      </tr>
-    </thead>
-    <tbody id="tableBody">
-      <tr><td colspan="8">Carregando...</td></tr>
-    </tbody>
-  </table>
+    <section class="table-section">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>NFE</th>
+            <th>SV</th>
+            <th>Nome</th>
+            <th>Data Registro</th>
+            <th>Estado</th>
+            <th>Localização</th>
+            <th>Responsável</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <tr><td colspan="8">Carregando...</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
 
   <script type="module">
     import { auth, db } from './firebase-config.js';
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js";
-    import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-firestore.js";
+    import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-firestore.js";
 
     // Proteção da página — redireciona se não logado
     onAuthStateChanged(auth, user => {
-      if (!user) {
-        window.location.href = "login.html";
-      }
+      if (!user) window.location.href = "login.html";
     });
 
     // Logout
@@ -70,30 +63,17 @@
 
     async function fetchFerramentais(filter = '') {
       tableBody.innerHTML = '<tr><td colspan="8">Carregando...</td></tr>';
-
       const ferramentasRef = collection(db, 'ferramentais');
-
-      // Se tiver filtro, pesquisa por SV, Nome ou NF-e (igualdade exata ou usa "where")
-      // Como Firestore não tem OR direto, usaremos busca simples (pode melhorar com indexação)
-      let q;
-      if (filter.trim() !== '') {
-        // Aqui, busca documentos onde "SV" == filter OR "Nome" == filter OR "NFE" == filter
-        // Firestore não suporta OR direto, então vamos buscar tudo e filtrar no cliente
-        q = ferramentasRef;
-      } else {
-        q = ferramentasRef;
-      }
-
-      const querySnapshot = await getDocs(q);
+      const querySnapshot = await getDocs(ferramentasRef);
       let docs = [];
 
       querySnapshot.forEach(doc => {
         const data = doc.data();
-        // Filtragem simples em JS
-        if (filter.trim() === '' ||
-          (data.SV && data.SV.toString().toLowerCase().includes(filter.toLowerCase())) ||
-          (data.Nome && data.Nome.toLowerCase().includes(filter.toLowerCase())) ||
-          (data.NFE && data.NFE.toString().toLowerCase().includes(filter.toLowerCase()))
+        // Filtragem simples no cliente
+        if (!filter ||
+            (data.SV && data.SV.toString().toLowerCase().includes(filter.toLowerCase())) ||
+            (data.Nome && data.Nome.toLowerCase().includes(filter.toLowerCase())) ||
+            (data.NFE && data.NFE.toString().toLowerCase().includes(filter.toLowerCase()))
         ) {
           docs.push(data);
         }
@@ -122,11 +102,9 @@
     }
 
     // Buscar ao clicar no botão
-    searchBtn.addEventListener('click', () => {
-      fetchFerramentais(searchInput.value);
-    });
+    searchBtn.addEventListener('click', () => fetchFerramentais(searchInput.value));
 
-    // Buscar tudo ao carregar a página
+    // Buscar todos ao carregar a página
     fetchFerramentais('');
   </script>
 </body>
