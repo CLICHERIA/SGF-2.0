@@ -3,174 +3,111 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Gestão de Ferramentais — Grupo Sovel</title>
+<title>Registrar Ferramental — Grupo Sovel</title>
 
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Inter", Arial, sans-serif;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Inter", Arial, sans-serif; }
     body {
-        background: linear-gradient(
-            180deg,
-            #eef3f9 0%,
-            #f5f7fa 40%,
-            #ffffff 100%
-        );
-        color: #2b2b2b;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
+        background: linear-gradient(180deg,#eef3f9 0%,#f5f7fa 40%,#ffffff 100%);
+        color: #2b2b2b; min-height: 100vh; display: flex; flex-direction: column;
     }
-
-    /* Container principal */
-    .hero {
-        padding: 130px 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
+    /* Reaproveitando o estilo do index */
+    .hero { padding: 80px 20px 40px; display:flex; justify-content:center; align-items:center; }
     .caixa {
-        background: #ffffff;
-        padding: 50px 70px;
-        border-radius: 18px;
-        width: 650px;
-        text-align: center;
-        box-shadow: 0 8px 28px rgba(0,0,0,0.09);
-        border: 1px solid #e6e9ef;
-        animation: fadeIn 0.4s ease;
+        background:#ffffff; padding:40px 50px; border-radius:18px; width:90%; max-width:900px;
+        text-align:left; box-shadow:0 8px 28px rgba(0,0,0,0.09); border:1px solid #e6e9ef; animation:fadeIn .4s ease;
     }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to   { opacity: 1; transform: translateY(0); }
+    @keyframes fadeIn { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)} }
+    .titulo { font-size:1.8rem; font-weight:700; color:#123b7a; margin-bottom:8px; }
+    .sub { font-size:1rem; color:#4e4e4e; margin-bottom:18px; }
+    form .row { display:flex; gap:16px; margin-bottom:12px; }
+    .field { flex:1; display:flex; flex-direction:column; }
+    label { font-size:0.95rem; color:#344; margin-bottom:6px; }
+    input[type="text"], input[type="number"], textarea, select {
+        padding:10px 12px; border-radius:8px; border:1px solid #d9dee6; background:#fbfdff;
+        font-size:0.95rem; color:#223;
     }
-
-    .titulo {
-        font-size: 2.4rem;
-        font-weight: 700;
-        margin-bottom: 10px;
-        color: #123b7a;
-    }
-
-    .sub {
-        font-size: 1.05rem;
-        color: #4e4e4e;
-        margin-bottom: 35px;
-    }
-
-    .btn {
-        padding: 14px 34px;
-        border-radius: 10px;
-        border: none;
-        background: #1d5cc6;
-        color: #fff;
-        font-size: 1.15rem;
-        font-weight: 600;
-        cursor: pointer;
-        text-decoration: none;
-        transition: 0.3s;
-        box-shadow: 0 4px 16px rgba(29, 92, 198, 0.28);
-        display: inline-block;
-    }
-
-    .btn:hover {
-        background: #174da7;
-        box-shadow: 0 6px 20px rgba(29, 92, 198, 0.38);
-        transform: translateY(-2px);
-    }
-
-    /* Rodapé */
-    footer {
-        background: #123b7a;
-        padding: 50px 40px;
-        margin-top: auto;
-        color: white;
-    }
-
-    .footer-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 40px;
-        max-width: 1200px;
-        margin: auto;
-    }
-
-    .footer-col {
-        font-size: 0.95rem;
-        line-height: 1.7;
-        opacity: 0.93;
-    }
-
-    .footer-col img {
-        width: 160px;
-        margin-bottom: 10px;
-    }
-
-    iframe {
-        width: 100%;
-        height: 200px;
-        border-radius: 12px;
-        border: none;
-    }
-
-    .footer-bottom {
-        margin-top: 40px;
-        text-align: center;
-        opacity: 0.75;
-        font-size: 0.85rem;
-    }
+    textarea { min-height:110px; resize:vertical; }
+    .actions { margin-top:18px; display:flex; gap:12px; justify-content:flex-end; }
+    .btn { padding:10px 20px; border-radius:10px; font-weight:600; text-decoration:none; cursor:pointer; }
+    .btn.primary { background:#1d5cc6; color:#fff; border:none; box-shadow:0 4px 16px rgba(29,92,198,0.28); }
+    .btn.ghost { background:transparent; color:#1d5cc6; border:1px solid #1d5cc6; }
+    /* footer (copiado do index) */
+    footer { background:#123b7a; padding:50px 40px; margin-top:auto; color:white;}
+    .footer-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:40px; max-width:1200px; margin:auto; }
+    .footer-col { font-size:0.95rem; line-height:1.7; opacity:0.93; text-align:left; }
+    .footer-col img { width:160px; margin-bottom:10px; display:block; }
+    .footer-bottom { margin-top:40px; text-align:center; opacity:0.75; font-size:0.85rem; }
+    @media (max-width:800px){ .row{flex-direction:column} .footer-grid{grid-template-columns:1fr} .caixa{padding:30px} .hero{padding:50px 12px} }
 </style>
 </head>
-
 <body>
 
 <section class="hero">
-    <div class="caixa">
-        <h1 class="titulo">Gestão de Ferramentais</h1>
-        <div class="sub">
-            Grupo Sovel — Departamento de Amostras e Clicheria
-        </div>
+  <div class="caixa">
+    <div class="titulo">Registrar Novo Ferramental</div>
+    <div class="sub">Preencha os dados do ferramental para cadastrar no sistema.</div>
 
-        <a href="menu.html" class="btn">Acessar Menu Interativo</a>
-    </div>
+    <form action="#" method="post">
+      <div class="row">
+        <div class="field">
+          <label for="cod">Código / Tag</label>
+          <input id="cod" name="cod" type="text" placeholder="Ex: FERR-0001">
+        </div>
+        <div class="field">
+          <label for="tipo">Tipo</label>
+          <select id="tipo" name="tipo">
+            <option>Ferramental</option>
+            <option>Matriz</option>
+            <option>Ferramenta Especial</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="nome">Nome</label>
+          <input id="nome" name="nome" type="text" placeholder="Nome do ferramental">
+        </div>
+        <div class="field">
+          <label for="quant">Quantidade</label>
+          <input id="quant" name="quant" type="number" placeholder="0">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field" style="flex:1">
+          <label for="desc">Descrição / Observações</label>
+          <textarea id="desc" name="desc" placeholder="Informações técnicas, identificação do QR, etc."></textarea>
+        </div>
+      </div>
+
+      <div class="actions">
+        <a href="menu.html" class="btn ghost">Cancelar</a>
+        <button type="submit" class="btn primary">Registrar</button>
+      </div>
+    </form>
+
+  </div>
 </section>
 
 <footer>
-    <div class="footer-grid">
-
-        <div class="footer-col">
-            <img src="assets/img/logosovel1337.png" />
-            <p></p>
-        </div>
-
-        <div class="footer-col">
-            📍 Rua Dr. João de Paulo, 600 — Colônia Antônio Aleixo<br>
-            Manaus - AM<br><br>
-
-            📞 (92) 9 8202-0067<br><br>
-
-            🕒 Seg–Qui: 7h às 17h<br>
-            🕒 Sexta: 7h às 16h
-        </div>
-
-        <div class="footer-col">
-            <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-59.97%2C-3.15%2C-59.95%2C-3.12&amp;layer=mapnik&amp;marker=-3.13%2C-59.96"></iframe>
-        </div>
-
+  <div class="footer-grid">
+    <div class="footer-col">
+      <img src="assets/img/logosovel1337.png" alt="Sovel">
     </div>
-
-    <div class="footer-bottom">
-        © 2025 Sovel da Amazônia — Todos os direitos reservados.
+    <div class="footer-col">
+      📍 Rua Dr. João de Paulo, 600 — Colônia Antônio Aleixo<br>Manaus - AM<br><br>
+      📞 (92) 9 8202-0067<br><br>
+      🕒 Seg–Qui: 7h às 17h<br>🕒 Sexta: 7h às 16h
     </div>
+    <div class="footer-col">
+      <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-59.97%2C-3.15%2C-59.95%2C-3.12&amp;layer=mapnik&amp;marker=-3.13%2C-59.96"></iframe>
+    </div>
+  </div>
 
+  <div class="footer-bottom">© 2025 Sovel da Amazônia — Todos os direitos reservados.</div>
 </footer>
 
 </body>
 </html>
-
-
