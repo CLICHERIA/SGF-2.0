@@ -19,7 +19,17 @@ body {
     flex-direction:column;
     align-items:center;
     min-height:100vh;
+}
+
+/* Container principal */
+.main-container {
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
     padding:40px 20px;
+    width:100%;
+    max-width:1200px;
 }
 
 /* Logo */
@@ -67,12 +77,13 @@ h2 {
     transform:translateY(-2px);
 }
 
-/* Rodapé azul escuro igual index.html */
+/* Rodapé azul escuro ocupando toda largura */
 footer {
-    background: #123b7a;
-    padding:50px 40px;
+    width:100%;
+    background:#123b7a;
     color:white;
     text-align:center;
+    padding:50px 20px;
     font-size:0.85rem;
 }
 
@@ -92,16 +103,18 @@ footer {
 
 <body>
 
-<img src="assets/img/logosovel1337.png" alt="Logo" class="logo">
+<div class="main-container">
+    <img src="assets/img/logosovel1337.png" alt="Logo" class="logo">
 
-<h2>Menu Interativo</h2>
+    <h2>Menu Interativo</h2>
 
-<div class="menu-buttons">
-    <button id="btn1" onclick="alert('Ferramentais')">Ferramentais</button>
-    <button id="btn2" onclick="alert('Amostras')">Amostras</button>
-    <button id="btn3" onclick="alert('Clicheria')">Clicheria</button>
-    <button id="btn4" onclick="alert('Estoque')">Estoque</button>
-    <button id="logoutBtn">Sair</button>
+    <div class="menu-buttons">
+        <button id="btn1" onclick="alert('Ferramentais')">Ferramentais</button>
+        <button id="btn2" onclick="alert('Amostras')">Amostras</button>
+        <button id="btn3" onclick="alert('Clicheria')">Clicheria</button>
+        <button id="btn4" onclick="alert('Estoque')">Estoque</button>
+        <button id="logoutBtn">Sair</button>
+    </div>
 </div>
 
 <footer>
