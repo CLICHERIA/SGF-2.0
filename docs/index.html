@@ -1,174 +1,248 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Gestão de Ferramentais — Grupo Sovel</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestão de Ferramentais — Grupo Sovel</title>
 
-<style>
+  <style>
     * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Inter", Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    body {
-        background: linear-gradient(
-            180deg,
-            #eef3f9 0%,
-            #f5f7fa 40%,
-            #ffffff 100%
-        );
-        color: #2b2b2b;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
+    body, html {
+      width: 100%;
+      height: 100%;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: #f2f4f7;
+      overflow-x: hidden;
     }
 
-    /* Container principal */
+    /* ✅ Fundo corporativo suave */
     .hero {
-        padding: 130px 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      position: relative;
+      width: 100%;
+      height: 90vh;
+      background: #e9edf2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
 
-    .caixa {
-        background: #ffffff;
-        padding: 50px 70px;
-        border-radius: 18px;
-        width: 650px;
-        text-align: center;
-        box-shadow: 0 8px 28px rgba(0,0,0,0.09);
-        border: 1px solid #e6e9ef;
-        animation: fadeIn 0.4s ease;
+    /* ✅ Imagem amazon.png com opacidade */
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("assets/img/amazon.png");
+      background-size: cover;
+      background-position: center;
+      opacity: 0.22;     /* ✅ imagem suave */
+      filter: blur(1px);
     }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to   { opacity: 1; transform: translateY(0); }
+    /* ✅ Camada suave branca (efeito corporativo) */
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.6),
+        rgba(255,255,255,0.85)
+      );
     }
 
-    .titulo {
-        font-size: 2.4rem;
-        font-weight: 700;
-        margin-bottom: 10px;
-        color: #123b7a;
+    /* ✅ Conteúdo central */
+    .content {
+      position: relative;
+      z-index: 5;
+      text-align: center;
+      color: #2b3a4a;
     }
 
-    .sub {
-        font-size: 1.05rem;
-        color: #4e4e4e;
-        margin-bottom: 35px;
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 600;
+      margin-bottom: 8px;
     }
 
+    h2 {
+      font-size: 1.1rem;
+      font-weight: 400;
+      opacity: 0.8;
+      margin-bottom: 32px;
+    }
+
+    /* ✅ Botão corporativo */
     .btn {
-        padding: 14px 34px;
-        border-radius: 10px;
-        border: none;
-        background: #1d5cc6;
-        color: #fff;
-        font-size: 1.15rem;
-        font-weight: 600;
-        cursor: pointer;
-        text-decoration: none;
-        transition: 0.3s;
-        box-shadow: 0 4px 16px rgba(29, 92, 198, 0.28);
-        display: inline-block;
+      display: inline-block;
+      padding: 15px 40px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      color: white;
+      background: #2b6cb0;
+      transition: 0.25s ease;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
     }
 
     .btn:hover {
-        background: #174da7;
-        box-shadow: 0 6px 20px rgba(29, 92, 198, 0.38);
-        transform: translateY(-2px);
+      background: #1e548a;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.22);
     }
 
-    /* Rodapé */
-    footer {
-        background: #123b7a;
-        padding: 50px 40px;
-        margin-top: auto;
-        color: white;
+    /* ✅ FOOTER */
+    .footer {
+      width: 100%;
+      background: #ffffff;
+      padding: 35px 40px 15px;
+      border-top: 1px solid #d4d7db;
+      margin-top: 0;
     }
 
-    .footer-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 40px;
-        max-width: 1200px;
-        margin: auto;
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 40px;
+      max-width: 1200px;
+      margin: auto;
     }
 
-    .footer-col {
-        font-size: 0.95rem;
-        line-height: 1.7;
-        opacity: 0.93;
+    .footer-left {
+      max-width: 280px;
     }
 
-    .footer-col img {
-        width: 160px;
-        margin-bottom: 10px;
+    .footer-logo {
+      width: 130px;
+      margin-bottom: 10px;
     }
 
-    iframe {
-        width: 100%;
-        height: 200px;
-        border-radius: 12px;
-        border: none;
+    .footer-about {
+      font-size: 0.95rem;
+      color: #4a5568;
+      margin-bottom: 12px;
     }
 
-    .footer-bottom {
-        margin-top: 40px;
-        text-align: center;
-        opacity: 0.75;
-        font-size: 0.85rem;
+    .icon {
+      width: 26px;
+      margin-right: 10px;
+      opacity: 0.75;
+      transition: 0.2s;
     }
-</style>
+    .icon:hover { opacity: 1; }
+
+    .footer-center {
+      font-size: 0.95rem;
+      color: #4a5568;
+    }
+
+    .footer-item {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .footer-ico {
+      font-size: 1.2rem;
+    }
+
+    .footer-map iframe {
+      width: 280px;
+      height: 180px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .footer-line {
+      margin: 25px auto;
+      width: 90%;
+      border: none;
+      height: 1px;
+      background: #d0d3d7;
+    }
+
+    .footer-copy {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+  </style>
+
 </head>
 
 <body>
 
-<section class="hero">
-    <div class="caixa">
-        <h1 class="titulo">Gestão de Ferramentais</h1>
-        <div class="sub">
-            Grupo Sovel — Departamento de Amostras e Clicheria
-        </div>
-
-        <a href="menu.html" class="btn">Acessar Menu Interativo</a>
+  <div class="hero">
+    <div class="content">
+      <h1>Gestão de Ferramentais</h1>
+      <h2>Grupo Sovel — Departamento de Amostras e Clicheria</h2>
+      <a href="menu.html" class="btn">Acessar Painel Interativo</a>
     </div>
-</section>
+  </div>
 
-<footer>
-    <div class="footer-grid">
+  <!-- ✅ RODAPÉ COMPLETO -->
+  <footer class="footer">
+    <div class="footer-content">
 
-        <div class="footer-col">
-            <img src="assets/img/logo.png" />
-            <p>Grupo Sovel, uma empresa genuinamente amazonense.</p>
+      <!-- COLUNA ESQUERDA -->
+      <div class="footer-left">
+        <img src="assets/img/logosovel1337.png" alt="Sovel" class="footer-logo">
+
+        <p class="footer-about">
+          Grupo Sovel, uma empresa genuinamente amazônense.
+        </p>
+
+        <div class="social-links">
+          <a href="#"><img src="assets/img/instagram.svg" class="icon"></a>
+          <a href="#"><img src="assets/img/linkedin.svg" class="icon"></a>
+        </div>
+      </div>
+
+      <!-- COLUNA CENTRAL -->
+      <div class="footer-center">
+        <div class="footer-item">
+          <span class="footer-ico">📍</span>
+          <p>
+            <strong>Rua Dr. João de Paulo, 600</strong><br>
+            Colônia Antônio Aleixo<br>
+            Manaus - AM
+          </p>
         </div>
 
-        <div class="footer-col">
-            📍 Rua Dr. João de Paulo, 600 — Colônia Antônio Aleixo<br>
-            Manaus - AM<br><br>
-
-            📞 (92) 9 8202-0067<br><br>
-
-            🕒 Seg–Qui: 7h às 17h<br>
-            🕒 Sexta: 7h às 16h
+        <div class="footer-item">
+          <span class="footer-ico">📞</span>
+          <p><strong>(92) 9 8202-0067</strong></p>
         </div>
 
-        <div class="footer-col">
-            <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-59.97%2C-3.15%2C-59.95%2C-3.12&amp;layer=mapnik&amp;marker=-3.13%2C-59.96"></iframe>
+        <div class="footer-item">
+          <span class="footer-ico">ℹ️</span>
+          <p>
+            Seg - Qui: 7h às 17h<br>
+            Sex: 7h às 16h
+          </p>
         </div>
+      </div>
+
+      <!-- COLUNA DIREITA (MAPA) -->
+      <div class="footer-map">
+        <iframe 
+          src="https://www.openstreetmap.org/export/embed.html?bbox=-60.067%2C-3.12%2C-59.99%2C-3.05&layer=mapnik&marker=-3.10%2C-60.02">
+        </iframe>
+      </div>
 
     </div>
 
-    <div class="footer-bottom">
-        © 2025 Sovel da Amazônia — Todos os direitos reservados.
-    </div>
+    <hr class="footer-line">
 
-</footer>
+    <p class="footer-copy">Copyright © 2025 Sovel da Amazônia</p>
+  </footer>
 
 </body>
 </html>
