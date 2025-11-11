@@ -39,10 +39,9 @@
     © 2025 Grupo Sovel da Amazônia — Todos os direitos reservados.
 </footer>
 
-<!-- Firebase -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAAMyXl5uWSWYNAy-qZBy3N3yU84mdS73w",
@@ -61,14 +60,6 @@ const senhaInput = document.getElementById('senha');
 const loginBtn = document.getElementById('loginBtn');
 const errorMsg = document.getElementById('errorMsg');
 
-// Se usuário já estiver logado, impede acesso ao index
-onAuthStateChanged(auth, user => {
-  if(user){
-    window.location.href = "menu.html";
-  }
-});
-
-// Login
 loginBtn.addEventListener('click', async () => {
   const email = emailInput.value.trim();
   const senha = senhaInput.value;
@@ -81,12 +72,14 @@ loginBtn.addEventListener('click', async () => {
   try {
     await signInWithEmailAndPassword(auth, email, senha);
     errorMsg.textContent = '';
-    window.location.href = "menu.html";
+    window.location.href = "menu.html"; // só redireciona após login
   } catch(e){
     console.error(e);
     errorMsg.textContent = "E-mail ou senha inválidos.";
   }
 });
+
+// Não redireciona automaticamente ao abrir a página
 </script>
 
 </body>
