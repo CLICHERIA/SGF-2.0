@@ -1,78 +1,176 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Registrar — SGF</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gestão de Ferramentais — Grupo Sovel</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", Arial, sans-serif;
+    }
+
+    body {
+        background: linear-gradient(
+            180deg,
+            #eef3f9 0%,
+            #f5f7fa 40%,
+            #ffffff 100%
+        );
+        color: #2b2b2b;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Container principal */
+    .hero {
+        padding: 130px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .caixa {
+        background: #ffffff;
+        padding: 50px 70px;
+        border-radius: 18px;
+        width: 650px;
+        text-align: center;
+        box-shadow: 0 8px 28px rgba(0,0,0,0.09);
+        border: 1px solid #e6e9ef;
+        animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .titulo {
+        font-size: 2.4rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: #123b7a;
+    }
+
+    .sub {
+        font-size: 1.05rem;
+        color: #4e4e4e;
+        margin-bottom: 35px;
+    }
+
+    .btn {
+        padding: 14px 34px;
+        border-radius: 10px;
+        border: none;
+        background: #1d5cc6;
+        color: #fff;
+        font-size: 1.15rem;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        transition: 0.3s;
+        box-shadow: 0 4px 16px rgba(29, 92, 198, 0.28);
+        display: inline-block;
+    }
+
+    .btn:hover {
+        background: #174da7;
+        box-shadow: 0 6px 20px rgba(29, 92, 198, 0.38);
+        transform: translateY(-2px);
+    }
+
+    /* Rodapé */
+    footer {
+        background: #123b7a;
+        padding: 50px 40px;
+        margin-top: auto;
+        color: white;
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 40px;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .footer-col {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        opacity: 0.93;
+    }
+
+    .footer-col img {
+        width: 160px;
+        margin-bottom: 10px;
+    }
+
+    iframe {
+        width: 100%;
+        height: 200px;
+        border-radius: 12px;
+        border: none;
+    }
+
+    .footer-bottom {
+        margin-top: 40px;
+        text-align: center;
+        opacity: 0.75;
+        font-size: 0.85rem;
+    }
+</style>
 </head>
+
 <body>
-  <div class="container">
-    <header class="header">
-      <img src="assets/img/logosovel1337.png" class="logo" alt="logo" />
-      <div>
-        <div class="title">Registrar Ferramental</div>
-        <div class="subtitle">Adicione um novo ferramental ao inventário</div>
-      </div>
-    </header>
 
-    <main class="card fade-in">
-      <form id="formRegistro" class="form-grid" onsubmit="return false;">
-        <select id="tipo" class="select" required>
-          <option value="">Tipo de Ferramental</option>
-          <option>Faca</option>
-          <option>Clichê</option>
-          <option>Outro</option>
-        </select>
-
-        <input id="nfe" class="input" placeholder="Nº da NF-e (opcional)" />
-        <input id="sv" class="input" placeholder="SV (código)" required />
-        <input id="nome" class="input" placeholder="Nome do Ferramental" required />
-        <input id="dataRegistro" class="input" placeholder="Data de Registro (dd/mm/aaaa hh:mm)" />
-        <input id="estado" class="input" placeholder="Estado (Em uso / Danificada / Em manutenção / Para substituir)" required />
-        <input id="localizacao" class="input" placeholder="Localização (Armário, fileira, posição)" required />
-
-        <div style="display:flex; gap:10px; align-items:center;">
-          <button id="btnRegistrar" class="btn" type="button">Registrar</button>
-          <button class="btn ghost" type="button" onclick="location.href='menu.html'">Voltar</button>
+<section class="hero">
+    <div class="caixa">
+        <h1 class="titulo">Gestão de Ferramentais</h1>
+        <div class="sub">
+            Grupo Sovel — Departamento de Amostras e Clicheria
         </div>
-      </form>
-    </main>
-  </div>
 
-  <script type="module">
-    import { auth } from './assets/js/firebase-config.js';
-    import { registrarFerramental } from './assets/js/script.js';
-    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js";
+        <a href="menu.html" class="btn">Acessar Menu Interativo</a>
+    </div>
+</section>
 
-    onAuthStateChanged(auth, user => {
-      if (!user) {
-        Swal.fire({ icon:'warning', title:'Faça login', text:'Você precisa efetuar login antes de registrar.' }).then(()=> window.location.href='index.html');
-      }
-    });
+<footer>
+    <div class="footer-grid">
 
-    document.getElementById('btnRegistrar').onclick = async () => {
-      const tipo = document.getElementById('tipo').value;
-      const nfe = document.getElementById('nfe').value.trim();
-      const sv = document.getElementById('sv').value.trim();
-      const nome = document.getElementById('nome').value.trim();
-      const dataRegistro = document.getElementById('dataRegistro').value.trim() || new Date().toLocaleString();
-      const estado = document.getElementById('estado').value.trim();
-      const localizacao = document.getElementById('localizacao').value.trim();
+        <div class="footer-col">
+            <img src="assets/img/logosovel1337.png" />
+            <p></p>
+        </div>
 
-      if(!tipo || !sv || !nome || !estado || !localizacao) {
-        Swal.fire({ icon:'error', title:'Campos faltando', text:'Preencha todos os campos obrigatórios.'});
-        return;
-      }
+        <div class="footer-col">
+            📍 Rua Dr. João de Paulo, 600 — Colônia Antônio Aleixo<br>
+            Manaus - AM<br><br>
 
-      const user = auth.currentUser;
-      const responsavel = user ? user.email : "anônimo";
+            📞 (92) 9 8202-0067<br><br>
 
-      const payload = { tipo, nfe, sv, nome, dataRegistro, estado, localizacao, responsavel };
-      const id = await registrarFerramental(payload);
-      if(id) setTimeout(()=> location.href='consultar.html', 900);
-    };
-  </script>
+            🕒 Seg–Qui: 7h às 17h<br>
+            🕒 Sexta: 7h às 16h
+        </div>
+
+        <div class="footer-col">
+            <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-59.97%2C-3.15%2C-59.95%2C-3.12&amp;layer=mapnik&amp;marker=-3.13%2C-59.96"></iframe>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2025 Sovel da Amazônia — Todos os direitos reservados.
+    </div>
+
+</footer>
+
 </body>
 </html>
+
+
