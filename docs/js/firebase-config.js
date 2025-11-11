@@ -30,17 +30,13 @@ const firebaseConfig = {
 
 /* ====== Coloque o objeto real aqui ====== */
 const firebaseConfig = {
-  apiKey: "<COLE_AQUI>",
-  authDomain: "<COLE_AQUI>",
-  projectId: "<COLE_AQUI>",
-  storageBucket: "<COLE_AQUI>",
-  messagingSenderId: "<COLE_AQUI>",
-  appId: "<COLE_AQUI>"
+  apiKey: "AIzaSyAAMyXl5uWSWYNAy-... (EXEMPLO)",
+  authDomain: "dacsovel-53481.firebaseapp.com",
+  projectId: "dacsovel-53481",
+  storageBucket: "dacsovel-53481.appspot.com",
+  messagingSenderId: "37867522513",
+  appId: "1:37867522513:web:336d687e3fc8408bd138f0"
 };
 /* ======================================= */
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-
-export { app, db, auth };
+const app
