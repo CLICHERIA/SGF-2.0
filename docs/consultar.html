@@ -3,270 +3,222 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Consulta de Ferramentais</title>
-
-  <!-- Estilos básicos (você pode adaptar) -->
+  <title>Consulta Ferramentais</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f0f4f9;
-      margin: 0; padding: 20px;
-      color: #222;
-    }
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      background: white;
-      padding: 20px 30px;
-      border-radius: 6px;
-      box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+      background: #f0f6fc;
+      margin: 20px;
+      color: #1a355e;
     }
     h1 {
       text-align: center;
-      color: #1a3a70;
+      margin-bottom: 0;
+    }
+    p.subtitulo {
+      text-align: center;
+      margin-top: 5px;
+      margin-bottom: 30px;
+      color: #334b82;
+      font-weight: 500;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgb(0 0 0 / 0.1);
     }
     input[type="text"] {
       width: 300px;
-      padding: 8px;
-      font-size: 16px;
-      margin-right: 10px;
+      padding: 8px 12px;
+      border: 1px solid #ccd9f9;
       border-radius: 4px;
-      border: 1px solid #ccc;
+      font-size: 1rem;
+      margin-right: 10px;
     }
     button {
-      padding: 8px 14px;
-      font-size: 16px;
+      background-color: #3f51b5;
       border: none;
+      color: white;
+      padding: 9px 16px;
       border-radius: 4px;
       cursor: pointer;
-      margin-right: 8px;
+      font-weight: 600;
+      transition: background-color 0.3s;
+      margin-right: 5px;
+    }
+    button:hover:not(:disabled) {
+      background-color: #2c387e;
     }
     button:disabled {
-      background: #ccc;
+      background-color: #b0b6e0;
       cursor: not-allowed;
-    }
-    button.btn-primary {
-      background-color: #2563eb;
-      color: white;
-    }
-    button.btn-secondary {
-      background-color: #e5e7eb;
-      color: #111;
-    }
-    button.btn-danger {
-      background-color: #dc2626;
-      color: white;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 20px;
+      margin-top: 25px;
     }
     th, td {
-      border: 1px solid #ddd;
-      padding: 8px 10px;
+      border: 1px solid #ccd9f9;
+      padding: 10px 12px;
       text-align: left;
-      font-size: 14px;
+      font-size: 0.9rem;
     }
     th {
-      background-color: #1a3a70;
+      background-color: #3f51b5;
       color: white;
+      font-weight: 700;
+    }
+    tr:nth-child(even) {
+      background-color: #e7ecf9;
+    }
+    tr.loading td {
+      text-align: center;
+      font-style: italic;
+      color: #6c7baf;
+    }
+    .acoes button {
+      background-color: #ff5722;
+      padding: 5px 10px;
+      font-size: 0.85rem;
+      margin: 0 3px;
+    }
+    .acoes button:hover {
+      background-color: #e64a19;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Consulta de Ferramentais</h1>
-    <p style="text-align:center; margin-bottom: 20px;">Busque por SV, Nome ou NF-e</p>
-
-    <div style="text-align:center; margin-bottom: 20px;">
+    <p class="subtitulo">Busque por SV, Nome ou NF-e</p>
+    <div>
       <input type="text" id="inputBusca" placeholder="Digite SV, Nome ou NF-e" />
-      <button id="btnConsultar" class="btn btn-primary">Consultar</button>
-      <button id="btnCSV" class="btn btn-secondary">Exportar CSV</button>
-      <button id="btnPDF" class="btn btn-secondary">Exportar PDF</button>
-      <button id="btnVoltar" class="btn btn-danger">Voltar</button>
+      <button id="btnBuscar">Consultar</button>
+      <button id="btnExportarCSV" disabled>Exportar CSV</button>
+      <button id="btnVoltar">Voltar</button>
     </div>
 
-    <table>
+    <table id="tabelaFerramentais">
       <thead>
         <tr>
           <th>Tipo</th>
           <th>NF-e</th>
           <th>SV</th>
           <th>Nome</th>
-          <th>Data</th>
+          <th>Data Registro</th>
           <th>Estado</th>
           <th>Localização</th>
           <th>Responsável</th>
           <th>Ações</th>
         </tr>
       </thead>
-      <tbody id="tabelaFerramentais">
-        <tr><td colspan="9" style="text-align:center;">Nenhum registro carregado</td></tr>
+      <tbody>
+        <tr class="loading">
+          <td colspan="9">Carregando...</td>
+        </tr>
       </tbody>
     </table>
   </div>
 
-  <!-- Firebase SDKs e configuração -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs, doc, getDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-firestore.js";
-    import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js";
+    import { auth } from './assets/js/firebase-config.js';
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js";
+    import { buscarTodos } from './assets/js/script.js';
+    import { exportToCSV } from './assets/js/exporter.js';
 
-    // Configuração Firebase (substitua pelos seus dados)
-    const firebaseConfig = {
-      apiKey: "AIzaSyAAMyXl5uWSWYNAy-... (EXEMPLO)",
-  authDomain: "dacsovel-53481.firebaseapp.com",
-  projectId: "dacsovel-53481",
-  storageBucket: "dacsovel-53481.appspot.com",
-  messagingSenderId: "37867522513",
-  appId: "1:37867522513:web:336d687e3fc8408bd138f0"
-};
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
-
-    // Exportar funções para usar fora do módulo
-    window.db = db;
-    window.auth = auth;
-
-    // Funções de acesso ao Firestore (igual script.js original)
-    window.buscarTodos = async () => {
-      try {
-        const col = collection(db, "ferramentais");
-        const q = query(col, orderBy("dataRegistro", "desc"));
-        const snap = await getDocs(q);
-        const arr = [];
-        snap.forEach(d => arr.push({ id: d.id, ...d.data() }));
-        return arr;
-      } catch (err) {
-        console.error("Erro ao buscar todos:", err);
-        throw err;
-      }
-    };
-
-    window.removerFerramental = async (id) => {
-      try {
-        await deleteDoc(doc(db, "ferramentais", id));
-        Swal.fire({ icon: "success", title: "Removido", text: "Registro excluído." });
-        // Atualiza a tabela após remoção
-        btnConsultar.click();
-      } catch (err) {
-        Swal.fire({ icon: "error", title: "Erro ao excluir", text: err.message });
-      }
-    };
-  </script>
-
-  <!-- Biblioteca XLSX (para exportação Excel) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
-  <!-- SweetAlert2 (alertas) -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-  <!-- jsPDF (para PDF básico) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-  <!-- Funções Exporter (CSV/XLSX) -->
-  <script>
-    function exportToCSV(dataArray, filename = 'export.csv') {
-      const headers = ['id','tipo','nfe','sv','nome','dataRegistro','estado','localizacao','responsavel'];
-      const rows = dataArray.map(item => headers.map(h => item[h] || ''));
-      const csv = [headers.join(','), ...rows.map(r => r.map(s => `"${String(s).replace(/"/g,'""')}"`).join(','))].join('\n');
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.setAttribute('download', filename);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    }
-  </script>
-
-  <!-- Script da página -->
-  <script>
-    const btnConsultar = document.getElementById('btnConsultar');
-    const btnCSV = document.getElementById('btnCSV');
-    const btnPDF = document.getElementById('btnPDF');
-    const btnVoltar = document.getElementById('btnVoltar');
+    const tabelaBody = document.querySelector('#tabelaFerramentais tbody');
     const inputBusca = document.getElementById('inputBusca');
-    const tabela = document.getElementById('tabelaFerramentais');
+    const btnBuscar = document.getElementById('btnBuscar');
+    const btnExportarCSV = document.getElementById('btnExportarCSV');
+    const btnVoltar = document.getElementById('btnVoltar');
 
     let dadosAtuais = [];
 
-    function renderTabela(data) {
-      tabela.innerHTML = '';
+    function formatarData(timestamp) {
+      const d = new Date(timestamp);
+      return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    }
 
-      if (!data || data.length === 0) {
-        tabela.innerHTML = '<tr><td colspan="9" style="text-align:center;">Nenhum registro encontrado</td></tr>';
-        return;
-      }
-
-      data.forEach(item => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
+    function montarLinha(item) {
+      return `
+        <tr>
           <td>${item.tipo || ''}</td>
           <td>${item.nfe || ''}</td>
           <td>${item.sv || ''}</td>
           <td>${item.nome || ''}</td>
-          <td>${item.dataRegistro || ''}</td>
+          <td>${item.dataRegistro ? formatarData(item.dataRegistro.seconds * 1000) : ''}</td>
           <td>${item.estado || ''}</td>
           <td>${item.localizacao || ''}</td>
           <td>${item.responsavel || ''}</td>
-          <td>
-            <button class="btn btn-danger" onclick="removerFerramental('${item.id}')">Excluir</button>
+          <td class="acoes">
+            <button onclick="alert('Funcionalidade editar ainda não implementada')">Editar</button>
+            <button onclick="alert('Funcionalidade excluir ainda não implementada')">Excluir</button>
           </td>
-        `;
-        tabela.appendChild(tr);
-      });
+        </tr>`;
     }
 
-    btnConsultar.addEventListener('click', async () => {
-      const termo = inputBusca.value.trim().toLowerCase();
-      btnConsultar.disabled = true;
-      btnConsultar.textContent = "Buscando...";
-
-      try {
-        const todos = await buscarTodos();
-        dadosAtuais = termo
-          ? todos.filter(item =>
-              (item.nome || '').toLowerCase().includes(termo) ||
-              (item.sv || '').toLowerCase().includes(termo) ||
-              (item.nfe || '').toLowerCase().includes(termo)
-            )
-          : todos;
-
-        renderTabela(dadosAtuais);
-      } catch (err) {
-        Swal.fire({ icon: "error", title: "Erro na consulta", text: err.message });
+    function montarTabela(dados) {
+      if (!dados.length) {
+        tabelaBody.innerHTML = `<tr><td colspan="9" style="text-align:center;">Nenhum resultado encontrado.</td></tr>`;
+        btnExportarCSV.disabled = true;
+        return;
       }
+      tabelaBody.innerHTML = dados.map(montarLinha).join('');
+      btnExportarCSV.disabled = false;
+    }
 
-      btnConsultar.disabled = false;
-      btnConsultar.textContent = "Consultar";
+    async function carregarTodos() {
+      tabelaBody.innerHTML = `<tr class="loading"><td colspan="9">Carregando...</td></tr>`;
+      try {
+        dadosAtuais = await buscarTodos();
+        montarTabela(dadosAtuais);
+      } catch (e) {
+        tabelaBody.innerHTML = `<tr><td colspan="9" style="color:red; text-align:center;">Erro ao carregar dados.</td></tr>`;
+        console.error(e);
+      }
+    }
+
+    function filtrarDados(texto) {
+      const txt = texto.toLowerCase();
+      return dadosAtuais.filter(item =>
+        (item.sv && item.sv.toLowerCase().includes(txt)) ||
+        (item.nome && item.nome.toLowerCase().includes(txt)) ||
+        (item.nfe && item.nfe.toLowerCase().includes(txt))
+      );
+    }
+
+    btnBuscar.addEventListener('click', () => {
+      const busca = inputBusca.value.trim();
+      if (!busca) {
+        montarTabela(dadosAtuais);
+      } else {
+        const resultados = filtrarDados(busca);
+        montarTabela(resultados);
+      }
     });
 
-    btnCSV.addEventListener('click', () => {
-      if (!dadosAtuais.length) return Swal.fire({ icon: "error", title: "Sem dados", text: "Nenhum registro para exportar." });
-      exportToCSV(dadosAtuais, 'ferramentais.csv');
-    });
-
-    btnPDF.addEventListener('click', async () => {
-      if (!dadosAtuais.length) return Swal.fire({ icon: "error", title: "Sem dados", text: "Nenhum registro para exportar." });
-
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      doc.text("Consulta de Ferramentais", 14, 15);
-      let y = 25;
-      dadosAtuais.forEach((item, i) => {
-        doc.text(`${i + 1}. ${item.nome || ''} (${item.sv || ''}) - ${item.estado || ''}`, 14, y);
-        y += 8;
-      });
-      doc.save("ferramentais.pdf");
+    btnExportarCSV.addEventListener('click', () => {
+      exportToCSV(dadosAtuais, 'ferramentais-export.csv');
     });
 
     btnVoltar.addEventListener('click', () => {
-      window.location.href = 'dashboard.html';
+      window.location.href = 'index.html';
     });
+
+    // Verifica login e carrega dados
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        carregarTodos();
+      } else {
+        alert('Você precisa estar logado para acessar essa página.');
+        window.location.href = 'login.html';
+      }
+    });
+
   </script>
 </body>
 </html>
