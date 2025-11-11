@@ -6,77 +6,87 @@
 <title>Gestão de Ferramentais — Grupo Sovel</title>
 
 <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Inter", Arial, sans-serif; }
-    body { background: linear-gradient(180deg,#eef3f9 0%,#f5f7fa 40%,#ffffff 100%); min-height: 100vh; display: flex; flex-direction: column; color: #2b2b2b; }
-    .hero { padding: 130px 20px; display: flex; justify-content: center; align-items: center; }
-    .caixa { background: #fff; padding: 50px 70px; border-radius: 18px; width: 650px; text-align: center; box-shadow: 0 8px 28px rgba(0,0,0,0.09); border: 1px solid #e6e9ef; animation: fadeIn 0.4s ease; }
-    @keyframes fadeIn { from { opacity:0; transform: translateY(10px);} to{opacity:1; transform: translateY(0);} }
-    .titulo { font-size: 2.4rem; font-weight:700; margin-bottom:10px; color:#123b7a; }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:"Inter", Arial, sans-serif; }
+    body { background: linear-gradient(180deg, #eef3f9 0%, #f5f7fa 40%, #ffffff 100%); color:#2b2b2b; min-height:100vh; display:flex; flex-direction:column; }
+    .hero { padding:130px 20px; display:flex; justify-content:center; align-items:center; }
+    .caixa { background:#fff; padding:50px 70px; border-radius:18px; width:650px; text-align:center; box-shadow:0 8px 28px rgba(0,0,0,0.09); border:1px solid #e6e9ef; animation:fadeIn 0.4s ease; }
+    @keyframes fadeIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+    .titulo { font-size:2.4rem; font-weight:700; margin-bottom:10px; color:#123b7a; }
     .sub { font-size:1.05rem; color:#4e4e4e; margin-bottom:35px; }
-    .input { width: 100%; padding: 12px 14px; margin: 8px 0; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem; }
-    .btn { padding: 14px 34px; border-radius: 10px; border:none; background:#1d5cc6; color:#fff; font-size:1.15rem; font-weight:600; cursor:pointer; text-decoration:none; transition:0.3s; box-shadow:0 4px 16px rgba(29,92,198,0.28); display:inline-block; }
+    input { width:100%; padding:12px 15px; margin:8px 0; border-radius:8px; border:1px solid #ccc; font-size:1rem; }
+    .btn { padding:14px 34px; border-radius:10px; border:none; background:#1d5cc6; color:#fff; font-size:1.15rem; font-weight:600; cursor:pointer; text-decoration:none; transition:0.3s; box-shadow:0 4px 16px rgba(29,92,198,0.28); display:inline-block; margin-top:15px; }
     .btn:hover { background:#174da7; box-shadow:0 6px 20px rgba(29,92,198,0.38); transform:translateY(-2px); }
-    #mainContent { display: none; flex-direction: column; align-items: center; gap:20px; }
-    .error { color:red; margin-top:10px; }
+    .error { color:red; margin-top:10px; font-size:0.95rem; }
+    footer { background:#123b7a; padding:50px 40px; margin-top:auto; color:white; text-align:center; font-size:0.85rem; opacity:0.9; }
 </style>
 </head>
 
 <body>
 
 <section class="hero">
+    <div class="caixa">
+        <h1 class="titulo">Sistema de Gestão de Ferramentais</h1>
+        <div class="sub">Autenticação</div>
 
-  <!-- Formulário de login -->
-  <div class="caixa" id="loginForm">
-    <h1 class="titulo">Login</h1>
-    <div class="sub">Digite seu e-mail e senha</div>
-    <input type="email" placeholder="E-mail" id="email" class="input" />
-    <input type="password" placeholder="Senha" id="senha" class="input" />
-    <button class="btn" id="loginBtn">Entrar</button>
-    <div class="error" id="errorMsg"></div>
-  </div>
-
-  <!-- Conteúdo principal depois do login -->
-  <div class="caixa" id="mainContent">
-    <h1 class="titulo">Bem-vindo!</h1>
-    <div class="sub">Você está logado.</div>
-    <a href="menu.html" class="btn">Acessar Menu Interativo</a>
-  </div>
-
+        <input type="email" id="email" placeholder="E-mail" required>
+        <input type="password" id="senha" placeholder="Senha" required>
+        <button class="btn" id="loginBtn">Entrar</button>
+        <div class="error" id="errorMsg"></div>
+    </div>
 </section>
 
+<footer>
+    © 2025 Grupo Sovel da Amazônia — Todos os direitos reservados.
+</footer>
+
+<!-- Firebase -->
 <script type="module">
-  import { auth } from './firebase-config.js';
-  import { signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js";
 
-  const loginBtn = document.getElementById('loginBtn');
-  const emailInput = document.getElementById('email');
-  const senhaInput = document.getElementById('senha');
-  const errorMsg = document.getElementById('errorMsg');
-  const loginForm = document.getElementById('loginForm');
-  const mainContent = document.getElementById('mainContent');
+const firebaseConfig = {
+  apiKey: "AIzaSyAAMyXl5uWSWYNAy-qZBy3N3yU84mdS73w",
+  authDomain: "dacsovel-53481.firebaseapp.com",
+  projectId: "dacsovel-53481",
+  storageBucket: "dacsovel-53481.firebasestorage.app",
+  messagingSenderId: "37867522513",
+  appId: "1:37867522513:web:336d687e3fc8408bd138f0",
+};
 
-  // Verifica se usuário já está logado
-  onAuthStateChanged(auth, user => {
-    if(user){
-      loginForm.style.display = 'none';
-      mainContent.style.display = 'flex';
-    } else {
-      loginForm.style.display = 'flex';
-      mainContent.style.display = 'none';
-    }
-  });
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-  loginBtn.addEventListener('click', async () => {
-    const email = emailInput.value;
-    const senha = senhaInput.value;
+const emailInput = document.getElementById('email');
+const senhaInput = document.getElementById('senha');
+const loginBtn = document.getElementById('loginBtn');
+const errorMsg = document.getElementById('errorMsg');
 
-    try {
-      await signInWithEmailAndPassword(auth, email, senha);
-      errorMsg.textContent = '';
-    } catch(e) {
-      errorMsg.textContent = 'E-mail ou senha inválidos.';
-    }
-  });
+// Se usuário já estiver logado, impede acesso ao index
+onAuthStateChanged(auth, user => {
+  if(user){
+    window.location.href = "menu.html";
+  }
+});
+
+// Login
+loginBtn.addEventListener('click', async () => {
+  const email = emailInput.value.trim();
+  const senha = senhaInput.value;
+
+  if(!email || !senha){
+    errorMsg.textContent = "Preencha todos os campos.";
+    return;
+  }
+
+  try {
+    await signInWithEmailAndPassword(auth, email, senha);
+    errorMsg.textContent = '';
+    window.location.href = "menu.html";
+  } catch(e){
+    console.error(e);
+    errorMsg.textContent = "E-mail ou senha inválidos.";
+  }
+});
 </script>
 
 </body>
