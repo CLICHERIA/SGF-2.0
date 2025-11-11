@@ -1,52 +1,71 @@
-// script.js — funções comuns usando Firestore (v10 modular)
+// script.js — versão compatível com GitHub Pages (sem import/export)
+
+// --- Inicialização Firebase (substitua se necessário) ---
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
 import {
-  collection, addDoc, getDocs, doc, getDoc,
-  updateDoc, deleteDoc, onSnapshot, query, orderBy
+  getFirestore, collection, addDoc, getDocs, getDoc,
+  updateDoc, deleteDoc, doc, query, orderBy, onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-firestore.js";
-import { signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js";
-import { db, auth } from "./firebase-config.js";
+import {
+  getAuth, signInWithEmailAndPassword, signOut
+} from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js";
 
-/* Helpers visuais */
-export function toastSuccess(title, text){
-  if (window.Swal) Swal.fire({ icon: "success", title, text, timer: 1500, showConfirmButton:false });
-  else alert(title + " — " + (text||""));
-}
-export function toastError(title, text){
-  if (window.Swal) Swal.fire({ icon: "error", title, text }); else alert(title + " — " + (text||""));
+// Configuração do Firebase (substitua pela sua)
+const firebaseConfig = {
+  apiKey: "AIzaSyAAMyXl5uWSWYNAy-... (EXEMPLO)",
+  authDomain: "dacsovel-53481.firebaseapp.com",
+  projectId: "dacsovel-53481",
+  storageBucket: "dacsovel-53481.appspot.com",
+  messagingSenderId: "37867522513",
+  appId: "1:37867522513:web:336d687e3fc8408bd138f0"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+// --- Helpers visuais ---
+function toastSuccess(title, text) {
+  if (window.Swal)
+    Swal.fire({ icon: "success", title, text, timer: 1500, showConfirmButton: false });
+  else alert(title + " — " + (text || ""));
 }
 
-/* Login */
-export async function login(email, password){
-  try{
+function toastError(title, text) {
+  if (window.Swal) Swal.fire({ icon: "error", title, text });
+  else alert(title + " — " + (text || ""));
+}
+
+// --- Login / Logout ---
+async function login(email, password) {
+  try {
     await signInWithEmailAndPassword(auth, email, password);
     toastSuccess("Login efetuado", "Redirecionando...");
     return true;
-  }catch(err){
+  } catch (err) {
     toastError("Erro no login", err.message);
     return false;
   }
 }
 
-/* Logout */
-export function logout(){
-  signOut(auth).then(()=> window.location.href = "index.html");
+function logout() {
+  signOut(auth).then(() => window.location.href = "index.html");
 }
 
-/* Registrar Ferramental (Firestore) */
-export async function registrarFerramental(data){
-  try{
+// --- CRUD: Ferramentais ---
+async function registrarFerramental(data) {
+  try {
     const col = collection(db, "ferramentais");
     const r = await addDoc(col, data);
     toastSuccess("Registrado", "Ferramental cadastrado com sucesso.");
     return r.id;
-  }catch(err){
+  } catch (err) {
     toastError("Erro ao registrar", err.message);
     return null;
   }
 }
 
-/* Buscar todos (snapshot -> array) */
-export async function buscarTodos(){
+async function buscarTodos() {
   try {
     const col = collection(db, "ferramentais");
     const q = query(col, orderBy("dataRegistro", "desc"));
@@ -56,12 +75,11 @@ export async function buscarTodos(){
     return arr;
   } catch (err) {
     console.error("Erro ao buscar todos:", err);
-    throw err; // Re-throw para tratamento upstream
+    throw err;
   }
 }
 
-/* Buscar por id */
-export async function buscarPorId(id){
+async function buscarPorId(id) {
   try {
     const d = await getDoc(doc(db, "ferramentais", id));
     if (!d.exists()) return null;
@@ -72,26 +90,29 @@ export async function buscarPorId(id){
   }
 }
 
-/* Atualizar */
-export async function atualizarFerramental(id, payload){
-  try{
+async function atualizarFerramental(id, payload) {
+  try {
     await updateDoc(doc(db, "ferramentais", id), payload);
     toastSuccess("Atualizado", "Registro atualizado com sucesso.");
     return true;
-  }catch(err){ toastError("Erro ao atualizar", err.message); return false; }
+  } catch (err) {
+    toastError("Erro ao atualizar", err.message);
+    return false;
+  }
 }
 
-/* Remover */
-export async function removerFerramental(id){
-  try{
+async function removerFerramental(id) {
+  try {
     await deleteDoc(doc(db, "ferramentais", id));
     toastSuccess("Removido", "Registro excluído.");
     return true;
-  }catch(err){ toastError("Erro ao excluir", err.message); return false; }
+  } catch (err) {
+    toastError("Erro ao excluir", err.message);
+    return false;
+  }
 }
 
-/* Observador em tempo real para dashboard */
-export function onFerramentaisChange(cb){
+function onFerramentaisChange(cb) {
   const col = collection(db, "ferramentais");
   const q = query(col, orderBy("dataRegistro", "desc"));
   return onSnapshot(q, snapshot => {
@@ -100,3 +121,17 @@ export function onFerramentaisChange(cb){
     cb(arr);
   }, err => console.error("onSnapshot error:", err));
 }
+
+// Torna todas as funções globais (acessíveis pelo consultar.html)
+window.db = db;
+window.auth = auth;
+window.login = login;
+window.logout = logout;
+window.buscarTodos = buscarTodos;
+window.removerFerramental = removerFerramental;
+window.registrarFerramental = registrarFerramental;
+window.atualizarFerramental = atualizarFerramental;
+window.buscarPorId = buscarPorId;
+window.onFerramentaisChange = onFerramentaisChange;
+window.toastSuccess = toastSuccess;
+window.toastError = toastError;
