@@ -15,35 +15,76 @@
 
 <body>
 
-<!-- ===== HERO / CABEÇALHO ===== -->
-<section class="hero" style="padding: 80px 20px 40px;">
-    <div class="caixa" style="max-width:1100px; width:100%; padding:40px;">
+<!-- ===== HERO / ÁREA INTERNA ===== -->
+<section class="hero" style="
+    padding: 60px 20px;
+    display:flex;
+    justify-content:center;
+">
+    <div class="caixa" style="
+        width:100%;
+        max-width:1100px;
+        background:#f7f9fc;
+        border-radius:18px;
+        padding:40px 50px;
+        box-shadow:0 4px 15px rgba(0,0,0,0.1);
+    ">
         
         <!-- Cabeçalho interno -->
-        <header class="header" style="display:flex; gap:20px; align-items:center; margin-bottom:25px;">
-            <img src="assets/img/logosovel1337.png" class="logo" style="width:95px;" alt="logo" />
+        <header class="header" style="
+            display:flex; 
+            gap:20px; 
+            align-items:center; 
+            margin-bottom:25px;
+        ">
+            <img src="assets/img/logosovel1337.png" class="logo" 
+                 style="width:95px;" alt="logo" />
+
             <div>
-                <div class="title" style="font-size:2rem; color:#123b7a; font-weight:700;">
+                <div class="title" style="
+                    font-size:2.1rem; 
+                    color:#123b7a; 
+                    font-weight:700;
+                ">
                     Consulta de Ferramentais
                 </div>
-                <div class="subtitle" style="color:#4e4e4e; font-size:1rem;">
+
+                <div class="subtitle" style="
+                    color:#4e4e4e; 
+                    font-size:1rem;
+                ">
                     Busque por SV, Nome ou NF-e
                 </div>
             </div>
         </header>
 
         <!-- ===== CONTEÚDO PRINCIPAL ===== -->
-        <main class="fade-in">
+        <main class="fade-in" style="width:100%;">
 
-            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:25px;">
-                <input id="busca" class="input" placeholder="Digite SV, Nome ou NF-e" />
+            <!-- Barra de busca -->
+            <div style="
+                display:flex; 
+                gap:10px; 
+                align-items:center; 
+                flex-wrap:wrap; 
+                margin-bottom:25px;
+                justify-content:center;
+            ">
+                <input id="busca" class="input" 
+                       placeholder="Digite SV, Nome ou NF-e" 
+                       style="max-width:350px; width:100%;" />
+
                 <button id="btnBuscar" class="btn">Buscar</button>
                 <button id="btnVoltar" class="btn ghost" onclick="location.href='menu.html'">Voltar</button>
                 <button id="btnExportCSV" class="btn ghost">Exportar CSV</button>
                 <button id="btnExportXLS" class="btn">Exportar XLSX</button>
             </div>
 
-            <div class="table-wrap" style="margin-top:20px;">
+            <!-- Tabela -->
+            <div class="table-wrap" style="
+                margin-top:20px;
+                overflow-x:auto;
+            ">
                 <table>
                 <thead>
                     <tr>
@@ -72,18 +113,21 @@
 
         <div class="footer-col" style="text-align:center;">
             <img src="assets/img/logosovel1337.png" />
-            <p></p>
+            <p>Grupo Sovel, uma empresa genuinamente amazonense.</p>
         </div>
 
         <div class="footer-col">
-           <br><br>
+            📍 Rua Dr. João de Paulo, 600 — Colônia Antônio Aleixo<br>
+            Manaus - AM<br><br>
 
-          <br><br>
+            📞 (92) 9 8202-0067<br><br>
 
-            <br>
-            
-        </div> 
-           
+            🕒 Seg–Qui: 7h às 17h<br>
+            🕒 Sexta: 7h às 16h
+        </div>
+
+        <div class="footer-col">
+            <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-59.97%2C-3.15%2C-59.95%2C-3.12&amp;layer=mapnik&amp;marker=-3.13%2C-59.96"></iframe>
         </div>
 
     </div>
@@ -128,7 +172,12 @@
 
       tr.querySelector('.editar').onclick = () => location.href = `editar.html?id=${item.id}`;
       tr.querySelector('.excluir').onclick = async () => {
-        const res = await Swal.fire({ icon:'warning', title:'Excluir?', text:'Deseja realmente excluir esse registro?', showCancelButton:true });
+        const res = await Swal.fire({ 
+            icon:'warning', 
+            title:'Excluir?', 
+            text:'Deseja realmente excluir esse registro?', 
+            showCancelButton:true 
+        });
         if (res.isConfirmed) {
           const ok = await removerFerramental(item.id);
           if(ok) tr.remove();
@@ -143,17 +192,28 @@
       limparTabela();
       const arr = await buscarTodos();
       currentList = arr;
-      if(arr.length === 0) tabela.innerHTML = '<tr><td colspan="9">Nenhum ferramental cadastrado</td></tr>';
-      else arr.forEach(i => tabela.appendChild(montarLinha(i)));
+
+      if(arr.length === 0)
+         tabela.innerHTML = '<tr><td colspan="9">Nenhum ferramental cadastrado</td></tr>';
+      else
+         arr.forEach(i => tabela.appendChild(montarLinha(i)));
     }
 
     btnBuscar.onclick = async () => {
       const termo = document.getElementById('busca').value.trim().toLowerCase();
       if(!termo) return carregarTodos();
-      const filtrados = currentList.filter(it => (it.sv && it.sv.toLowerCase().includes(termo)) || (it.nome && it.nome.toLowerCase().includes(termo)) || (it.nfe && it.nfe.toLowerCase().includes(termo)));
+
+      const filtrados = currentList.filter(it => 
+          (it.sv && it.sv.toLowerCase().includes(termo)) ||
+          (it.nome && it.nome.toLowerCase().includes(termo)) ||
+          (it.nfe && it.nfe.toLowerCase().includes(termo))
+      );
+
       limparTabela();
-      if(filtrados.length === 0) tabela.innerHTML = '<tr><td colspan="9">Nenhum ferramental encontrado</td></tr>';
-      else filtrados.forEach(i => tabela.appendChild(montarLinha(i)));
+      if(filtrados.length === 0) 
+          tabela.innerHTML = '<tr><td colspan="9">Nenhum ferramental encontrado</td></tr>';
+      else 
+          filtrados.forEach(i => tabela.appendChild(montarLinha(i)));
     };
 
     function gerarQR(item){
@@ -161,9 +221,10 @@
       const temp = document.createElement('div');
       new QRCode(temp, { text: url, width:260, height:260 });
       const img = temp.querySelector('img') || temp.querySelector('canvas');
+
       Swal.fire({
         title: `QR — ${item.nome}`,
-        html: `<div style="display:flex;justify-content:center">${img ? `<img src="${img.src}" style="width:220px"/>` : 'QR indisponível'}</div>` ,
+        html: `<div style="display:flex; justify-content:center;">${img ? `<img src="${img.src}" style="width:220px"/>` : 'QR indisponível'}</div>` ,
         showConfirmButton:true
       });
     }
@@ -183,4 +244,3 @@
 
 </body>
 </html>
-
