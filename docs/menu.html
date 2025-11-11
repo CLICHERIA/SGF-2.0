@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Menu — Sistema de Gestão de Ferramentais</title>
 
 <style>
@@ -58,7 +58,6 @@ h2 {
     text-decoration:none;
     transition:0.3s;
     box-shadow:0 4px 16px rgba(29,92,198,0.28);
-    display:inline-block;
     min-width:150px;
 }
 
@@ -90,6 +89,7 @@ footer {
 }
 </style>
 </head>
+
 <body>
 
 <img src="assets/img/logosovel1337.png" alt="Logo" class="logo">
@@ -140,80 +140,3 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
 
 </body>
 </html>
-    transform:translateY(-2px);
-    box-shadow:0 6px 20px rgba(29,92,198,0.38);
-}
-
-footer {
-    margin-top:auto;
-    background:#123b7a;
-    color:white;
-    text-align:center;
-    padding:20px 10px;
-    font-size:0.85rem;
-}
-
-/* RESPONSIVO */
-@media (max-width:600px){
-    .menu-buttons {
-        flex-direction: column;
-        gap:15px;
-    }
-    .menu-buttons button {
-        width:100%;
-        max-width:200px;
-    }
-}
-</style>
-</head>
-<body>
-
-<img src="assets/img/logosovel1337.png" alt="Logo" class="logo">
-
-<h2>Menu Interativo</h2>
-
-<div class="menu-buttons">
-    <button id="btn1" onclick="alert('Ferramentais')">Ferramentais</button>
-    <button id="btn2" onclick="alert('Amostras')">Amostras</button>
-    <button id="btn3" onclick="alert('Clicheria')">Clicheria</button>
-    <button id="btn4" onclick="alert('Estoque')">Estoque</button>
-    <button id="logoutBtn">Sair</button>
-</div>
-
-<footer>
-    © 2025 Grupo Sovel da Amazônia — Todos os direitos reservados.
-</footer>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
-import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAAMyXl5uWSWYNAy-qZBy3N3yU84mdS73w",
-  authDomain: "dacsovel-53481.firebaseapp.com",
-  projectId: "dacsovel-53481",
-  storageBucket: "dacsovel-53481.firebasestorage.app",
-  messagingSenderId: "37867522513",
-  appId: "1:37867522513:web:336d687e3fc8408bd138f0",
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-// Redireciona para login se não estiver autenticado
-onAuthStateChanged(auth, user => {
-    if(!user){
-        window.location.href = "index.html";
-    }
-});
-
-// Logout
-document.getElementById("logoutBtn").addEventListener("click", async () => {
-    await signOut(auth);
-    window.location.href = "index.html";
-});
-</script>
-
-</body>
-</html>
-
