@@ -24,14 +24,17 @@
         min-height: 100vh;
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     /* Container principal */
     .hero {
-        padding: 130px 20px;
+        padding: 50px 20px;
         display: flex;
         justify-content: center;
         align-items: center;
+        width: 100%;
     }
 
     .caixa {
@@ -63,6 +66,15 @@
         margin-bottom: 35px;
     }
 
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+    }
+
     .btn {
         padding: 14px 34px;
         border-radius: 10px;
@@ -76,6 +88,7 @@
         transition: 0.3s;
         box-shadow: 0 4px 16px rgba(29, 92, 198, 0.28);
         display: inline-block;
+        width: 100%;
     }
 
     .btn:hover {
@@ -90,6 +103,7 @@
         padding: 50px 40px;
         margin-top: auto;
         color: white;
+        width: 100%;
     }
 
     .footer-grid {
@@ -124,12 +138,41 @@
         opacity: 0.75;
         font-size: 0.85rem;
     }
+
+    /* Modal de carregamento */
+    #loader {
+        position: fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:white;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        z-index:1000;
+        flex-direction:column;
+    }
 </style>
 </head>
 
 <body>
 
-<section class="hero">
+<!-- Loader / Login -->
+<div id="loader">
+    <div class="caixa">
+        <h1 class="titulo">Login Necessário</h1>
+        <div class="sub">
+            Entre com seu e-mail e senha cadastrados no sistema
+        </div>
+        <input type="email" id="email" placeholder="E-mail" />
+        <input type="password" id="senha" placeholder="Senha" />
+        <button class="btn" id="loginBtn">Entrar</button>
+    </div>
+</div>
+
+<!-- Conteúdo principal -->
+<section class="hero" id="mainContent" style="display:none;">
     <div class="caixa">
         <h1 class="titulo">Gestão de Ferramentais</h1>
         <div class="sub">
@@ -140,7 +183,7 @@
     </div>
 </section>
 
-<footer>
+<footer id="mainFooter" style="display:none;">
     <div class="footer-grid">
 
         <div class="footer-col">
@@ -167,9 +210,55 @@
     <div class="footer-bottom">
         © 2025 Sovel da Amazônia — Todos os direitos reservados.
     </div>
-
 </footer>
+
+<!-- Firebase e Script de Login -->
+<script type="module">
+    // Import Firebase Auth
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js";
+
+    // Configuração do Firebase (substitua pelos seus dados)
+    const firebaseConfig = {
+        apiKey: "AIzaSyAAMyXl5uWSWYNAy-qZBy3N3yU84mdS73w",
+  authDomain: "dacsovel-53481.firebaseapp.com",
+  projectId: "dacsovel-53481",
+  storageBucket: "dacsovel-53481.firebasestorage.app",
+  messagingSenderId: "37867522513",
+  appId: "1:37867522513:web:336d687e3fc8408bd138f0",
+};
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const loginBtn = document.getElementById('loginBtn');
+    const loader = document.getElementById('loader');
+    const mainContent = document.getElementById('mainContent');
+    const mainFooter = document.getElementById('mainFooter');
+
+    loginBtn.addEventListener('click', async () => {
+        const email = document.getElementById('email').value;
+        const senha = document.getElementById('senha').value;
+
+        try {
+            await signInWithEmailAndPassword(auth, email, senha);
+            loader.style.display = 'none';
+            mainContent.style.display = 'flex';
+            mainFooter.style.display = 'block';
+        } catch (error) {
+            alert("E-mail ou senha inválidos. Tente novamente.");
+        }
+    });
+
+    // Mantém o usuário logado
+    onAuthStateChanged(auth, user => {
+        if(user){
+            loader.style.display = 'none';
+            mainContent.style.display = 'flex';
+            mainFooter.style.display = 'block';
+        }
+    });
+</script>
 
 </body>
 </html>
-
