@@ -10,6 +10,37 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+  <style>
+      /* Centralização geral */
+      body {
+        text-align: center;
+      }
+
+      .caixa {
+        margin: 0 auto;
+      }
+
+      .hero input.input {
+        height: 44px;
+        width: 280px;
+        text-align: center;
+      }
+
+      table th, table td {
+        text-align: center !important;
+      }
+
+      footer {
+        background: #0b2d5a;
+        color: #fff;
+        padding: 20px 0;
+        text-align: center;
+        margin-top: 40px;
+        font-size: 0.95rem;
+      }
+  </style>
+
 </head>
 
 <body>
@@ -18,7 +49,7 @@
 <!--   HERO / CABEÇALHO       -->
 <!-- ========================= -->
 <section class="hero" style="padding: 60px 20px;">
-    <div class="caixa" style="max-width:1100px; width:100%; padding:40px; text-align:center;">
+    <div class="caixa" style="max-width:1100px; width:100%; padding:40px;">
 
         <header style="margin-bottom:25px;">
             <img src="assets/img/logosovel1337.png" style="width:95px; margin-bottom:10px;" alt="logo" />
@@ -30,8 +61,7 @@
         <!--     BARRA DE BUSCA        -->
         <!-- ========================= -->
         <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:25px;">
-            <input id="busca" class="input" placeholder="Digite SV, Nome ou NF-e"
-                   style="width:280px; height:44px;" />
+            <input id="busca" class="input" placeholder="Digite SV, Nome ou NF-e" />
 
             <button id="btnBuscar" class="btn">Consultar</button>
             <button id="btnExportCSV" class="btn ghost">Exportar CSV</button>
@@ -66,7 +96,7 @@
 <!-- ========================= -->
 <!--         RODAPÉ            -->
 <!-- ========================= -->
-<footer style="text-align:center; padding:15px; margin-top:40px; font-size:0.9rem;">
+<footer>
     © 2025 Sovel da Amazônia — Todos os direitos reservados.
 </footer>
 
@@ -107,10 +137,17 @@
         </td>
       `;
 
-      tr.querySelector('.editar').onclick = () => location.href = `editar.html?id=${item.id}`;
+      tr.querySelector('.editar').onclick = () =>
+        location.href = `editar.html?id=${item.id}`;
 
       tr.querySelector('.excluir').onclick = async () => {
-        const res = await Swal.fire({ icon:'warning', title:'Excluir?', text:'Deseja realmente excluir esse registro?', showCancelButton:true });
+        const res = await Swal.fire({
+          icon:'warning',
+          title:'Excluir?',
+          text:'Deseja realmente excluir esse registro?',
+          showCancelButton:true
+        });
+
         if (res.isConfirmed) {
           const ok = await removerFerramental(item.id);
           if(ok) tr.remove();
@@ -127,8 +164,11 @@
       limparTabela();
       const arr = await buscarTodos();
       currentList = arr;
-      if(arr.length === 0) tabela.innerHTML = '<tr><td colspan="9">Nenhum ferramental cadastrado</td></tr>';
-      else arr.forEach(i => tabela.appendChild(montarLinha(i)));
+
+      if(arr.length === 0)
+        tabela.innerHTML = '<tr><td colspan="9">Nenhum ferramental cadastrado</td></tr>';
+      else
+        arr.forEach(i => tabela.appendChild(montarLinha(i)));
     }
 
     btnBuscar.onclick = () => {
@@ -142,20 +182,25 @@
       );
 
       limparTabela();
+
       if(filtrados.length === 0)
-          tabela.innerHTML = '<tr><td colspan="9">Nenhum ferramental encontrado</td></tr>';
+        tabela.innerHTML = '<tr><td colspan="9">Nenhum ferramental encontrado</td></tr>';
       else
-          filtrados.forEach(i => tabela.appendChild(montarLinha(i)));
+        filtrados.forEach(i => tabela.appendChild(montarLinha(i)));
     };
 
     function gerarQR(item){
       const url = `${window.location.origin}/SGF/detalhes.html?id=${item.id}`;
       const temp = document.createElement('div');
       new QRCode(temp, { text: url, width:280, height:280 });
+
       const img = temp.querySelector('img');
+
       Swal.fire({
         title: `QR — ${item.nome}`,
-        html: `<div style="display:flex; justify-content:center;"><img src="${img.src}" style="width:220px"/></div>`,
+        html: `<div style="display:flex; justify-content:center;">
+                <img src="${img.src}" style="width:220px"/>
+               </div>`,
         showConfirmButton:true
       });
     }
@@ -175,7 +220,9 @@
     }
 
     btnExportCSV.onclick = () => {
-      if(!currentList.length) return Swal.fire({ icon:'info', title:'Nada para exportar' });
+      if(!currentList.length)
+        return Swal.fire({ icon:'info', title:'Nada para exportar' });
+
       exportToCSV(currentList, 'ferramentais.csv');
     };
 
