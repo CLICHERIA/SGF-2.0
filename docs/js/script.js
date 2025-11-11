@@ -47,19 +47,29 @@ export async function registrarFerramental(data){
 
 /* Buscar todos (snapshot -> array) */
 export async function buscarTodos(){
-  const col = collection(db, "ferramentais");
-  const q = query(col, orderBy("dataRegistro", "desc"));
-  const snap = await getDocs(q);
-  const arr = [];
-  snap.forEach(d => arr.push({ id: d.id, ...d.data() }));
-  return arr;
+  try {
+    const col = collection(db, "ferramentais");
+    const q = query(col, orderBy("dataRegistro", "desc"));
+    const snap = await getDocs(q);
+    const arr = [];
+    snap.forEach(d => arr.push({ id: d.id, ...d.data() }));
+    return arr;
+  } catch (err) {
+    console.error("Erro ao buscar todos:", err);
+    throw err; // Re-throw para tratamento upstream
+  }
 }
 
 /* Buscar por id */
 export async function buscarPorId(id){
-  const d = await getDoc(doc(db, "ferramentais", id));
-  if (!d.exists()) return null;
-  return { id: d.id, ...d.data() };
+  try {
+    const d = await getDoc(doc(db, "ferramentais", id));
+    if (!d.exists()) return null;
+    return { id: d.id, ...d.data() };
+  } catch (err) {
+    console.error("Erro ao buscar por ID:", err);
+    throw err;
+  }
 }
 
 /* Atualizar */
