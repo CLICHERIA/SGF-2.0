@@ -1,394 +1,87 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Menu SGF — Grupo Sovel</title>
-  <meta name="description" content="Menu interativo do Sistema de Gestão de Ferramentais — Grupo Sovel (D.A.C)" />
-  <link rel="icon" href="assets/img/logosovel1337.png" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Menu SGF — Grupo Sovel</title>
 
-  <style>
-    /* -------------------------------------
-       RESET GLOBAL
-    ------------------------------------- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Inter", Arial, sans-serif;
-    }
-
-    body {
-      background: linear-gradient(
-        180deg,
-        #eef3f9 0%,
-        #f5f7fa 40%,
-        #ffffff 100%
-      );
-      color: #2b2b2b;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* -------------------------------------
-       HEADER
-    ------------------------------------- */
-    header {
-      padding: 50px 20px 30px;
-      text-align: center;
-      animation: fadeIn 0.5s ease;
-    }
-
-    header .logo {
-      width: 120px;
-      margin-bottom: 18px;
-    }
-
-    .title {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #123b7a;
-      margin-bottom: 6px;
-    }
-
-    .subtitle {
-      color: #4e4e4e;
-      font-size: 1rem;
-      opacity: 0.9;
-    }
-
-    /* -------------------------------------
-       CARD PRINCIPAL
-    ------------------------------------- */
-    .card {
-      background: #ffffff;
-      width: 90%;
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 40px 50px;
-      border-radius: 18px;
-      box-shadow: 0 8px 28px rgba(0,0,0,0.09);
-      border: 1px solid #e7e9ef;
-      animation: fadeIn 0.6s ease;
-    }
-
-    .welcome-title {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #123b7a;
-      margin-bottom: 8px;
-      text-align: center;
-    }
-
-    .welcome-desc {
-      text-align: center;
-      color: #555;
-      margin-bottom: 35px;
-      font-size: 1rem;
-    }
-
-    /* -------------------------------------
-       GRID DO MENU
-    ------------------------------------- */
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 22px;
-      margin-bottom: 40px;
-    }
-
-    .menu-btn {
-      background: #f9fbff;
-      border: 1px solid #e1e6ef;
-      padding: 22px;
-      border-radius: 14px;
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      cursor: pointer;
-      transition: 0.25s;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-    }
-
-    .menu-btn:hover {
-      background: #ffffff;
-      border-color: #d4d9e1;
-      transform: translateY(-3px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-    }
-
-    .menu-btn .icon {
-      font-size: 26px;
-      width: 35px;
-      text-align: center;
-    }
-
-    .btn-content .label {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: #123b7a;
-    }
-
-    .btn-content .desc {
-      font-size: 0.92rem;
-      color: #666;
-      margin-top: 4px;
-      line-height: 1.4;
-    }
-
-    /* -------------------------------------
-       BOTÕES FINAIS
-    ------------------------------------- */
-    .footer-actions {
-      margin-top: 25px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-      padding-top: 25px;
-      border-top: 1px solid #e1e4ea;
-    }
-
-    .copyright {
-      font-size: 0.9rem;
-      color: #666;
-    }
-
-    .actions {
-      display: flex;
-      gap: 12px;
-    }
-
-    .btn {
-      padding: 10px 24px;
-      border-radius: 10px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: 0.25s;
-      display: inline-block;
-    }
-
-    .btn.primary {
-      background: #1d5cc6;
-      color: #fff;
-      box-shadow: 0 4px 14px rgba(29,92,198,0.25);
-    }
-
-    .btn.primary:hover {
-      background: #174da7;
-      box-shadow: 0 6px 20px rgba(29,92,198,0.35);
-      transform: translateY(-2px);
-    }
-
-    .btn.ghost {
-      background: transparent;
-      border: 1px solid #1d5cc6;
-      color: #1d5cc6;
-    }
-
-    .btn.ghost:hover {
-      background: #1d5cc6;
-      color: #fff;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 14px rgba(29,92,198,0.25);
-    }
-
-    /* -------------------------------------
-       RODAPÉ
-    ------------------------------------- */
-    .footer {
-      margin-top: auto;
-      background: #123b7a;
-      padding: 22px;
-      text-align: center;
-      color: white;
-      font-size: 0.85rem;
-      opacity: 0.9;
-    }
-
-    /* Animação */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Modal de login */
-    #loginModal {
-      display:none;
-      position:fixed;
-      top:0;
-      left:0;
-      width:100%;
-      height:100%;
-      background:rgba(0,0,0,0.6);
-      justify-content:center;
-      align-items:center;
-      z-index:1000;
-    }
-
-    #loginModal .modal-content {
-      background:#fff;
-      padding:30px 40px;
-      border-radius:16px;
-      max-width:400px;
-      width:90%;
-      text-align:center;
-      position:relative;
-    }
-
-    #loginModal input {
-      width:100%;
-      padding:10px;
-      margin-bottom:15px;
-      border-radius:8px;
-      border:1px solid #ccc;
-    }
-
-    #loginModal button {
-      width:100%;
-      margin-top:10px;
-    }
-  </style>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:"Inter",Arial,sans-serif;}
+body {background: linear-gradient(180deg,#eef3f9 0%,#f5f7fa 40%,#ffffff 100%); color:#2b2b2b; min-height:100vh; display:flex; flex-direction:column;}
+header {padding:50px 20px 30px;text-align:center;animation:fadeIn 0.5s ease;}
+header .logo {width:120px;margin-bottom:18px;}
+.title {font-size:2rem;font-weight:700;color:#123b7a;margin-bottom:6px;}
+.subtitle {color:#4e4e4e;font-size:1rem;opacity:0.9;}
+.card {background:#fff;width:90%;max-width:900px;margin:40px auto;padding:40px 50px;border-radius:18px;box-shadow:0 8px 28px rgba(0,0,0,0.09);border:1px solid #e7e9ef;animation:fadeIn 0.6s ease;}
+.menu-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;margin-bottom:40px;}
+.menu-btn {background:#f9fbff;border:1px solid #e1e6ef;padding:22px;border-radius:14px;display:flex;align-items:flex-start;gap:16px;cursor:pointer;transition:0.25s;box-shadow:0 3px 10px rgba(0,0,0,0.05);}
+.menu-btn:hover {background:#fff;border-color:#d4d9e1;transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,0.08);}
+.menu-btn .icon {font-size:26px;width:35px;text-align:center;}
+.btn-content .label {font-size:1.15rem;font-weight:700;color:#123b7a;}
+.btn-content .desc {font-size:0.92rem;color:#666;margin-top:4px;line-height:1.4;}
+.footer-actions {margin-top:25px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;padding-top:25px;border-top:1px solid #e1e4ea;}
+.btn {padding:10px 24px;border-radius:10px;font-size:0.95rem;font-weight:600;text-decoration:none;transition:0.25s;display:inline-block;}
+.btn.primary {background:#1d5cc6;color:#fff;box-shadow:0 4px 14px rgba(29,92,198,0.25);}
+.btn.primary:hover {background:#174da7;box-shadow:0 6px 20px rgba(29,92,198,0.35);transform:translateY(-2px);}
+.btn.ghost {background:transparent;border:1px solid #1d5cc6;color:#1d5cc6;}
+.btn.ghost:hover {background:#1d5cc6;color:#fff;transform:translateY(-2px);box-shadow:0 4px 14px rgba(29,92,198,0.25);}
+.footer {margin-top:auto;background:#123b7a;padding:22px;text-align:center;color:white;font-size:0.85rem;opacity:0.9;}
+@keyframes fadeIn {from {opacity:0; transform:translateY(8px);} to {opacity:1; transform:translateY(0);}}
+</style>
 </head>
-
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <img src="assets/img/logosovel1337.png" class="logo" alt="Logo Grupo Sovel">
-    <div class="title">Sistema de Gestão de Ferramentais — SGF</div>
-    <div class="subtitle">Departamento de Amostras e Clicheria • Grupo Sovel da Amazônia</div>
-  </header>
+<header>
+<img src="assets/img/logosovel1337.png" class="logo" alt="Logo Grupo Sovel">
+<div class="title">Sistema de Gestão de Ferramentais — SGF</div>
+<div class="subtitle">Departamento de Amostras e Clicheria • Grupo Sovel da Amazônia</div>
+</header>
 
-  <!-- CARD PRINCIPAL -->
-  <main class="card">
+<main class="card">
+<h3 class="title">Menu Interativo SGF</h3>
 
-    <h3 class="welcome-title">Menu Interativo SGF</h3>
-    <p class="welcome-desc">Selecione uma opção abaixo para acessar as funcionalidades do sistema.</p>
+<div class="menu-grid">
 
-    <div class="menu-grid">
+<div class="menu-btn" onclick="location.href='registrar.html'"><div class="icon">➕</div><div class="btn-content"><div class="label">Registrar Ferramental</div><div class="desc">Adicionar novo item ao sistema</div></div></div>
 
-      <div class="menu-btn" onclick="location.href='registrar.html'">
-        <div class="icon">➕</div>
-        <div class="btn-content">
-          <div class="label">Registrar Ferramental</div>
-          <div class="desc">Adicionar novo item ao sistema</div>
-        </div>
-      </div>
+<div class="menu-btn" onclick="location.href='consultar.html'"><div class="icon">🔍</div><div class="btn-content"><div class="label">Consultar Ferramentais</div><div class="desc">Buscar, editar e gerar QR</div></div></div>
 
-      <div class="menu-btn" onclick="location.href='consultar.html'">
-        <div class="icon">🔍</div>
-        <div class="btn-content">
-          <div class="label">Consultar Ferramentais</div>
-          <div class="desc">Buscar, editar e gerar QR</div>
-        </div>
-      </div>
+<div class="menu-btn" onclick="location.href='dashboard.html'"><div class="icon">📈</div><div class="btn-content"><div class="label">Dashboard</div><div class="desc">Visão geral e gráficos</div></div></div>
 
-      <div class="menu-btn" onclick="location.href='dashboard.html'">
-        <div class="icon">📈</div>
-        <div class="btn-content">
-          <div class="label">Dashboard</div>
-          <div class="desc">Visão geral e gráficos</div>
-        </div>
-      </div>
+<div class="menu-btn" onclick="location.href='relatorios.html'"><div class="icon">📊</div><div class="btn-content"><div class="label">Relatórios</div><div class="desc">Gerar relatórios e estatísticas</div></div></div>
 
-      <div class="menu-btn" onclick="location.href='relatorios.html'">
-        <div class="icon">📊</div>
-        <div class="btn-content">
-          <div class="label">Relatórios</div>
-          <div class="desc">Gerar relatórios e estatísticas</div>
-        </div>
-      </div>
+<div class="menu-btn" onclick="location.href='configuracoes.html'"><div class="icon">⚙️</div><div class="btn-content"><div class="label">Configurações</div><div class="desc">Ajustes do sistema e usuário</div></div></div>
 
-      <div class="menu-btn" onclick="location.href='configuracoes.html'">
-        <div class="icon">⚙️</div>
-        <div class="btn-content">
-          <div class="label">Configurações</div>
-          <div class="desc">Ajustes do sistema e usuário</div>
-        </div>
-      </div>
+</div>
 
-      <div class="menu-btn" onclick="location.href='index.html'">
-        <div class="icon">🏠</div>
-        <div class="btn-content">
-          <div class="label">Voltar ao Início</div>
-          <div class="desc">Retornar à página principal</div>
-        </div>
-      </div>
+<div class="footer-actions">
+  <a class="btn ghost" href="README.html" target="_blank">Documentação</a>
+  <button class="btn primary" id="logoutBtn">Sair</button>
+</div>
 
-    </div>
+</main>
 
-    <div class="footer-actions">
-      <div class="copyright">© 2025 Grupo Sovel da Amazônia — D.A.C</div>
+<div class="footer">
+Versão 1.0 • Atualizado Outubro/2025
+</div>
 
-      <div class="actions">
-        <a class="btn ghost" href="README.html" target="_blank">Documentação</a>
-        <a class="btn primary" href="index.html">Sair</a>
-        <a class="btn primary" href="#" id="loginBtn">Login</a>
-      </div>
-    </div>
+<script type="module">
+import { auth } from './firebase-config.js';
+import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js";
 
-  </main>
+// Bloquear acesso se não estiver logado
+onAuthStateChanged(auth, user => {
+    if(!user){
+        window.location.href = 'index.html';
+    }
+});
 
-  <!-- Modal de login -->
-  <div id="loginModal">
-    <div class="modal-content">
-      <h3 style="color:#123b7a; margin-bottom:20px;">Login</h3>
-      <input type="email" id="loginEmail" placeholder="E-mail">
-      <input type="password" id="loginPassword" placeholder="Senha">
-      <button class="btn primary" id="submitLogin">Entrar</button>
-      <button class="btn ghost" id="closeLogin">Cancelar</button>
-    </div>
-  </div>
-
-  <!-- RODAPÉ FINAL -->
-  <div class="footer">
-    Versão 1.0 • Atualizado Outubro/2025
-  </div>
-
-  <!-- Script Firebase Login -->
-  <script type="module">
-    import { auth } from './firebase-config.js';
-    import { signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js";
-
-    const loginBtn = document.getElementById('loginBtn');
-    const loginModal = document.getElementById('loginModal');
-    const closeLogin = document.getElementById('closeLogin');
-    const submitLogin = document.getElementById('submitLogin');
-
-    // Mostrar modal
-    loginBtn.addEventListener('click', () => loginModal.style.display = 'flex');
-
-    // Fechar modal
-    closeLogin.addEventListener('click', () => loginModal.style.display = 'none');
-
-    // Login com e-mail e senha
-    submitLogin.addEventListener('click', async () => {
-      const email = document.getElementById('loginEmail').value;
-      const password = document.getElementById('loginPassword').value;
-
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        alert("Login realizado com sucesso!");
-        loginModal.style.display = 'none';
-      } catch (error) {
-        alert("Erro ao logar: " + error.message);
-      }
-    });
-
-    // Atualizar botão de login se já estiver logado
-    onAuthStateChanged(auth, user => {
-      if(user){
-        loginBtn.textContent = "Logado";
-        loginBtn.classList.add('ghost');
-        loginBtn.classList.remove('primary');
-        loginBtn.style.pointerEvents = "none";
-      }
-    });
-  </script>
+// Logout
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+    await signOut(auth);
+    window.location.href = 'index.html';
+});
+</script>
 
 </body>
 </html>
