@@ -10,93 +10,86 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        font-family: "Inter", Arial, sans-serif;
     }
 
     body {
-        font-family: "Inter", Arial, sans-serif;
-        color: #fff;
+        background: linear-gradient(
+            180deg,
+            #eef3f9 0%,
+            #f5f7fa 40%,
+            #ffffff 100%
+        );
+        color: #2b2b2b;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
-
-        background: #000;
-        background-image: url("assets/img/amazon.png");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
     }
 
-    .overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.55);
-        backdrop-filter: blur(1px);
-        z-index: 1;
-    }
-
+    /* Container principal */
     .hero {
-        z-index: 2;
-        width: 100%;
-        padding-top: 120px;
-        padding-bottom: 120px;
+        padding: 130px 20px;
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
     .caixa {
-        background: rgba(0, 22, 14, 0.65);
-        border: 1px solid #00ffbf70;
-        padding: 45px 70px;
+        background: #ffffff;
+        padding: 50px 70px;
         border-radius: 18px;
-        box-shadow: 0 0 25px #00ffbf50;
+        width: 650px;
         text-align: center;
-        backdrop-filter: blur(4px);
-        transition: 0.3s ease-in-out;
+        box-shadow: 0 8px 28px rgba(0,0,0,0.09);
+        border: 1px solid #e6e9ef;
+        animation: fadeIn 0.4s ease;
     }
 
-    .caixa:hover {
-        box-shadow: 0 0 40px #00ffbf80;
-        transform: scale(1.01);
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to   { opacity: 1; transform: translateY(0); }
     }
 
     .titulo {
-        font-size: 2.3rem;
+        font-size: 2.4rem;
         font-weight: 700;
         margin-bottom: 10px;
+        color: #123b7a;
     }
 
     .sub {
-        font-size: 1rem;
-        opacity: 0.85;
-        margin-bottom: 25px;
+        font-size: 1.05rem;
+        color: #4e4e4e;
+        margin-bottom: 35px;
     }
 
     .btn {
-        padding: 12px 28px;
+        padding: 14px 34px;
         border-radius: 10px;
-        border: 1px solid #00ffbf;
-        background: rgba(0, 255, 191, 0.15);
-        color: #00ffbf;
-        font-size: 1.1rem;
+        border: none;
+        background: #1d5cc6;
+        color: #fff;
+        font-size: 1.15rem;
         font-weight: 600;
         cursor: pointer;
-        transition: 0.3s;
         text-decoration: none;
+        transition: 0.3s;
+        box-shadow: 0 4px 16px rgba(29, 92, 198, 0.28);
         display: inline-block;
     }
 
     .btn:hover {
-        background: #00ffbf;
-        color: #001b12;
-        box-shadow: 0 0 20px #00ffbf;
+        background: #174da7;
+        box-shadow: 0 6px 20px rgba(29, 92, 198, 0.38);
+        transform: translateY(-2px);
     }
 
+    /* Rodapé */
     footer {
-        background: #1a4ba3;
-        padding: 60px 40px;
+        background: #123b7a;
+        padding: 50px 40px;
         margin-top: auto;
-        z-index: 2;
+        color: white;
     }
 
     .footer-grid {
@@ -108,35 +101,40 @@
     }
 
     .footer-col {
-        color: #fff;
         font-size: 0.95rem;
         line-height: 1.7;
+        opacity: 0.93;
     }
 
-    .footer-bottom {
-        text-align: center;
-        margin-top: 40px;
-        font-size: 0.85rem;
-        opacity: 0.8;
+    .footer-col img {
+        width: 160px;
+        margin-bottom: 10px;
     }
 
     iframe {
         width: 100%;
-        height: 180px;
+        height: 200px;
+        border-radius: 12px;
         border: none;
-        border-radius: 10px;
+    }
+
+    .footer-bottom {
+        margin-top: 40px;
+        text-align: center;
+        opacity: 0.75;
+        font-size: 0.85rem;
     }
 </style>
 </head>
 
 <body>
 
-<div class="overlay"></div>
-
 <section class="hero">
     <div class="caixa">
         <h1 class="titulo">Gestão de Ferramentais</h1>
-        <div class="sub">Grupo Sovel — Departamento de Amostras e Clicheria</div>
+        <div class="sub">
+            Grupo Sovel — Departamento de Amostras e Clicheria
+        </div>
 
         <a href="menu.html" class="btn">Acessar Menu Interativo</a>
     </div>
@@ -146,14 +144,18 @@
     <div class="footer-grid">
 
         <div class="footer-col">
-            <img src="assets/img/logo.png" width="150" />
-            <p>Grupo Sovel, uma empresa genuinamente amazonense</p>
+            <img src="assets/img/logo.png" />
+            <p>Grupo Sovel, uma empresa genuinamente amazonense.</p>
         </div>
 
         <div class="footer-col">
-            <p>📍 Rua Dr. João de Paulo, 600 — Colônia Antônio Aleixo<br>Manaus - AM</p>
-            <p>📞 (92) 9 8202-0067</p>
-            <p>🕒 Seg–Qui: 7h às 17h<br>Sexta: 7h às 16h</p>
+            📍 Rua Dr. João de Paulo, 600 — Colônia Antônio Aleixo<br>
+            Manaus - AM<br><br>
+
+            📞 (92) 9 8202-0067<br><br>
+
+            🕒 Seg–Qui: 7h às 17h<br>
+            🕒 Sexta: 7h às 16h
         </div>
 
         <div class="footer-col">
@@ -165,6 +167,7 @@
     <div class="footer-bottom">
         © 2025 Sovel da Amazônia — Todos os direitos reservados.
     </div>
+
 </footer>
 
 </body>
