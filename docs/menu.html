@@ -3,13 +3,18 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Menu — Gestão de Ferramentais</title>
+<title>Menu — Sistema de Gestão de Ferramentais</title>
 
 <style>
-* { margin:0; padding:0; box-sizing:border-box; font-family:"Inter", Arial, sans-serif; }
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Inter", Arial, sans-serif;
+}
 
 body {
-    background: #f5f7fa;
+    background: linear-gradient(180deg, #eef3f9 0%, #f5f7fa 40%, #ffffff 100%);
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -18,10 +23,16 @@ body {
 }
 
 .logo {
-    width: 70%; /* 30% menor que antes */
-    max-width: 200px;
-    margin-bottom: 40px;
-    transition:0.3s;
+    width:70%;
+    max-width:200px;
+    margin-bottom:20px;
+}
+
+h2 {
+    font-size:1.8rem;
+    color:#123b7a;
+    margin-bottom:30px;
+    text-align:center;
 }
 
 .menu-buttons {
@@ -42,6 +53,7 @@ body {
     cursor:pointer;
     box-shadow:0 4px 16px rgba(29,92,198,0.28);
     transition:0.3s;
+    min-width:150px;
 }
 
 .menu-buttons button:hover {
@@ -50,19 +62,13 @@ body {
     box-shadow:0 6px 20px rgba(29,92,198,0.38);
 }
 
-.logout-btn {
-    background:#c62828;
-}
-
-.logout-btn:hover {
-    background:#9e1f1f;
-}
-
 footer {
     margin-top:auto;
+    background:#123b7a;
+    color:white;
     text-align:center;
+    padding:20px 10px;
     font-size:0.85rem;
-    color:#555;
 }
 
 /* RESPONSIVO */
@@ -82,14 +88,15 @@ footer {
 
 <img src="assets/img/logosovel1337.png" alt="Logo" class="logo">
 
-<div class="menu-buttons">
-    <button id="btn1">Ferramentais</button>
-    <button id="btn2">Amostras</button>
-    <button id="btn3">Clicheria</button>
-    <button id="btn4">Estoque</button>
-</div>
+<h2>Menu Interativo</h2>
 
-<button class="logout-btn" id="logoutBtn">Sair</button>
+<div class="menu-buttons">
+    <button id="btn1" onclick="alert('Ferramentais')">Ferramentais</button>
+    <button id="btn2" onclick="alert('Amostras')">Amostras</button>
+    <button id="btn3" onclick="alert('Clicheria')">Clicheria</button>
+    <button id="btn4" onclick="alert('Estoque')">Estoque</button>
+    <button id="logoutBtn">Sair</button>
+</div>
 
 <footer>
     © 2025 Grupo Sovel da Amazônia — Todos os direitos reservados.
@@ -111,7 +118,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Redireciona se não estiver logado
+// Redireciona para login se não estiver autenticado
 onAuthStateChanged(auth, user => {
     if(!user){
         window.location.href = "index.html";
