@@ -108,28 +108,47 @@ footer {
     <button onclick="location.href='registrar.html'">Registrar</button>
     <button onclick="location.href='consultar.html'">Consultar</button>
     <button onclick="location.href='dashboard.html'">Dashboard</button>
-    <button onclick="logout()">Sair</button>
+    <button id="logoutBtn">Sair</button>
 </div>
 
 <footer>
     © 2025 Grupo Sovel da Amazônia — Todos os direitos reservados.
 </footer>
 
-<script src="firebase-config.js"></script>
-<script>
-function logout() {
-    // Deslogar usuário do Firebase e voltar para index.html
-    if (firebase && firebase.auth) {
-        firebase.auth().signOut().then(() => {
-            location.href = "index.html";
-        }).catch((error) => {
-            console.error("Erro ao sair:", error);
-        });
-    } else {
-        // fallback simples
-        location.href = "index.html";
-    }
-}
+<!-- Script Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
+import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAAMyXl5uWSWYNAy-qZBy3N3yU84mdS73w",
+  authDomain: "dacsovel-53481.firebaseapp.com",
+  projectId: "dacsovel-53481",
+  storageBucket: "dacsovel-53481.firebasestorage.app",
+  messagingSenderId: "37867522513",
+  appId: "1:37867522513:web:336d687e3fc8408bd138f0",
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// Redireciona se o usuário não estiver logado
+onAuthStateChanged(auth, user => {
+  if (!user) {
+    window.location.href = "index.html";
+  }
+});
+
+// Logout funcional
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+  try {
+    await signOut(auth);
+    window.location.href = "index.html";
+  } catch (error) {
+    console.error("Erro ao sair:", error);
+    alert("Erro ao sair. Tente novamente.");
+  }
+});
 </script>
 
 </body>
